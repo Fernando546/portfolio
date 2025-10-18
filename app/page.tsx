@@ -321,13 +321,18 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <HobbyCard
-              title="Gaming"
-              description="Passionate about competitive gaming and exploring new game mechanics and game development concepts."
+              title="Sports"
+              description="Passionate about fitness - gym training and running every day to maintain a healthy lifestyle and mental clarity."
             />
 
             <HobbyCard
-              title="Open Source"
-              description="Contributing to open-source projects and sharing knowledge with the developer community."
+              title="IoT & Hardware"
+              description="Interested in Internet of Things projects, smart devices, and embedded systems development."
+            />
+
+            <HobbyCard
+              title="Web Development"
+              description="Building modern, responsive web applications and exploring new frameworks and technologies."
             />
 
             <HobbyCard
@@ -336,55 +341,63 @@ export default function Home() {
             />
 
             <HobbyCard
-              title="UI/UX Design"
-              description="Interested in creating beautiful and intuitive user interfaces that provide excellent user experience."
-            />
-
-            <HobbyCard
               title="Music"
               description="Enjoys listening to various genres and exploring music production tools."
-            />
-
-            <HobbyCard
-              title="Learning"
-              description="Constantly exploring new technologies, frameworks, and best practices in software development."
             />
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-6 bg-stone-700/50">
-        <div className="max-w-6xl mx-auto text-center">
+      <section id="contact" className="relative py-20 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-800/50 to-stone-900/50"></div>
+        <div className="relative z-10 max-w-6xl mx-auto text-center">
           <SectionTitle title="Let's Connect" subtitle="Get in touch" />
 
-          <p className="text-xl text-stone-200 mb-8 max-w-2xl mx-auto">
-            Feel free to reach out for collaborations or just a friendly chat.
+          <p className="text-lg text-stone-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+            I'm always interested in hearing about new opportunities and collaborations. Feel free to reach out!
           </p>
 
-          <div className="flex gap-6 justify-center flex-wrap">
-            <a
-              href="mailto:contact@example.com"
-              className="px-6 py-3 bg-stone-600 text-white font-semibold rounded-lg hover:bg-stone-500 hover:shadow-lg hover:shadow-stone-600/50 transition-all duration-300"
-            >
-              Email Me
-            </a>
-            <a
-              href="https://github.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-stone-800 transition-all duration-300"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-stone-800 transition-all duration-300"
-            >
-              LinkedIn
-            </a>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div className="group p-6 rounded-lg border border-stone-700 bg-stone-800/30 hover:bg-stone-700/50 hover:border-stone-500 transition-all duration-300">
+              <div className="text-3xl mb-4">✉️</div>
+              <h3 className="text-lg font-semibold text-white mb-2">Email</h3>
+              <p className="text-stone-400 text-sm mb-4">Get in touch via email</p>
+              <a
+                href="mailto:contact@example.com"
+                className="inline-block px-4 py-2 bg-stone-600 text-white font-semibold rounded-lg hover:bg-stone-500 transition-all duration-300"
+              >
+                Send Email
+              </a>
+            </div>
+
+            <div className="group p-6 rounded-lg border border-stone-700 bg-stone-800/30 hover:bg-stone-700/50 hover:border-stone-500 transition-all duration-300">
+              <div className="text-3xl mb-4">💻</div>
+              <h3 className="text-lg font-semibold text-white mb-2">GitHub</h3>
+              <p className="text-stone-400 text-sm mb-4">Check out my projects</p>
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-4 py-2 bg-stone-600 text-white font-semibold rounded-lg hover:bg-stone-500 transition-all duration-300"
+              >
+                Visit GitHub
+              </a>
+            </div>
+
+            <div className="group p-6 rounded-lg border border-stone-700 bg-stone-800/30 hover:bg-stone-700/50 hover:border-stone-500 transition-all duration-300">
+              <div className="text-3xl mb-4">💼</div>
+              <h3 className="text-lg font-semibold text-white mb-2">LinkedIn</h3>
+              <p className="text-stone-400 text-sm mb-4">Connect on LinkedIn</p>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-4 py-2 bg-stone-600 text-white font-semibold rounded-lg hover:bg-stone-500 transition-all duration-300"
+              >
+                View Profile
+              </a>
+            </div>
           </div>
         </div>
       </section>

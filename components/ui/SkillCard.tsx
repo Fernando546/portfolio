@@ -5,28 +5,20 @@ interface SkillCardProps {
 }
 
 export default function SkillCard({ name, proficiency }: SkillCardProps) {
+  const proficiencyLabel = {
+    beginner: "Familiar",
+    intermediate: "Intermediate",
+    advanced: "Advanced",
+  };
+
   return (
     <div className="group animate-fade-in-up relative p-6 rounded-lg border border-stone-700 bg-stone-800/50 hover:bg-stone-700/70 hover:border-stone-600 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
-      <div className="relative z-10">
+      <div className="relative z-10 flex justify-between items-center">
         <p className="text-lg font-semibold text-white">{name}</p>
         {proficiency && (
-          <div className="mt-4 flex gap-2">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className={`h-2 w-10 rounded-full transition-all duration-300 ${
-                  i <=
-                  (proficiency === "beginner"
-                    ? 1
-                    : proficiency === "intermediate"
-                      ? 2
-                      : 3)
-                    ? "bg-stone-500 shadow-lg shadow-stone-500/50"
-                    : "bg-stone-700"
-                }`}
-              ></div>
-            ))}
-          </div>
+          <span className="ml-4 px-3 py-1 bg-stone-600/50 text-stone-200 text-xs font-semibold rounded-full border border-stone-600">
+            {proficiencyLabel[proficiency]}
+          </span>
         )}
       </div>
     </div>
