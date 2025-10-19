@@ -149,7 +149,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-stone-600 to-stone-800 rounded-full blur-2xl opacity-50"></div>
                 <div className="relative w-80 h-80 rounded-full border-2 border-stone-600 overflow-hidden">
                   <img
-                    src="/photo.jpg"
+                    src="/photo.JPG"
                     alt="Dawid"
                     className="w-full h-full object-cover"
                   />
