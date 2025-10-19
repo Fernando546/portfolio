@@ -226,9 +226,9 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Frontend */}
-            <SkillCard name="TypeScript" proficiency="advanced" />
-            <SkillCard name="React" proficiency="advanced" />
-            <SkillCard name="Next.js" proficiency="advanced" />
+            <SkillCard name="TypeScript" proficiency="intermediate" />
+            <SkillCard name="React" proficiency="intermediate" />
+            <SkillCard name="Next.js" proficiency="intermediate" />
 
             {/* Mobile */}
             <SkillCard name="React Native" proficiency="intermediate" />
@@ -237,13 +237,13 @@ export default function Home() {
 
             {/* Backend */}
             <SkillCard name="Node.js" proficiency="intermediate" />
-            <SkillCard name="Express" proficiency="intermediate" />
-            <SkillCard name="PostgreSQL" proficiency="intermediate" />
+            <SkillCard name="Express.js" proficiency="beginner" />
+            <SkillCard name="MongoDB" proficiency="intermediate" />
 
             {/* Tools & Other */}
-            <SkillCard name="Tailwind CSS" proficiency="advanced" />
-            <SkillCard name="Git & GitHub" proficiency="advanced" />
-            <SkillCard name="REST APIs" proficiency="advanced" />
+            <SkillCard name="Tailwind CSS" proficiency="intermediate" />
+            <SkillCard name="Git & GitHub" proficiency="intermediate" />
+            <SkillCard name="REST APIs" proficiency="beginner" />
           </div>
         </div>
       </section>
@@ -256,38 +256,39 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <ProjectCard
-              title="E-Commerce Platform"
-              description="Full-stack e-commerce solution with real-time inventory management, secure payment processing, and responsive design."
+              title="Versa - AI Fashion App"
+              description="AI-powered fashion recommendation app that suggests outfits based on user preferences and help's share people's style."
               tech={[
-                "Next.js",
+                "Expo",
                 "TypeScript",
-                "PostgreSQL",
+                "Supabase",
                 "Tailwind CSS",
+                "Mobile Development",
               ]}
-              link="https://example.com"
-              github="https://github.com"
+              link="https://versa-style.vercel.app/"
+              github="https://github.com/strat-development/fashion-app"
             />
 
             <ProjectCard
-              title="Task Management App"
-              description="Collaborative task management application built with React and Node.js. Features real-time updates and team collaboration."
-              tech={["React", "Node.js", "WebSocket", "MongoDB"]}
-              github="https://github.com"
+              title="HEDUM - Pediatric Therapy Website"
+              description="Website created for pediatric therapy center in Zielona Góra."
+              tech={["React", "Node.js", "Next.js", "Tailwind CSS", "Website Development"]}
+              link="https://www.hedum.pl/"
             />
 
             <ProjectCard
-              title="Mobile Fitness Tracker"
-              description="Cross-platform mobile app for fitness tracking with workouts, nutrition logging, and progress analytics."
-              tech={["React Native", "Expo", "Firebase"]}
-              github="https://github.com"
+              title="Temperature Monitoring App"
+              description="Device based on ESP32 measures temperature and other parameters and displays them on the website."
+              tech={["Next.js", "TypeScript", "Tailwind CSS", "MongoDB", "ArduinoIDE", "C++", "Website Development"]}
+              link="https://esp32-frontend.vercel.app/"
+              github="https://github.com/Fernando546/esp32-frontend"
             />
 
             <ProjectCard
-              title="Personal Blog"
-              description="Modern blog platform with markdown support, dark mode, and optimized performance."
-              tech={["Next.js", "MDX", "Vercel"]}
-              link="https://example.com"
-              github="https://github.com"
+              title="Message App based on LoRa technology"
+              description="Real-time messaging app utilizing LoRa technology for low-power, long-range communication."
+              tech={["Kotlin", "Android Studio", "ESP32", "LoRa", "Mobile Development"]}
+              github="https://github.com/Fernando546/LoraApp"
             />
           </div>
         </div>
