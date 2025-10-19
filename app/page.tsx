@@ -134,36 +134,55 @@ export default function Home() {
         />
         <div className="absolute top-0 right-0 w-96 h-96 bg-stone-600/10 rounded-full blur-3xl animate-float"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-stone-600/10 rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }}></div>
-        <div className="relative z-10 text-center max-w-4xl">
-          <div className="mb-6 animate-fade-in-up" style={{ animationDelay: "0s" }}>
-            <h1 className="text-6xl md:text-7xl font-semibold mb-4 leading-tight text-white">
-              Hey, I'm <span className="text-stone-300">Dawid</span>
-            </h1>
-          </div>
-          <div className="mb-8 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-            <p className="text-xl md:text-2xl text-stone-200 mb-2 font-normal">
-              4th Year Student | Full Stack Developer
-            </p>
-            <p className="text-lg text-stone-400">
-              Crafting beautiful and functional digital experiences
-            </p>
-          </div>
-          <div
-            className="animate-fade-in-up flex gap-4 justify-center flex-wrap"
-            style={{ animationDelay: "0.2s" }}
-          >
-            <a
-              href="#projects"
-              className="px-8 py-4 bg-stone-600 text-white font-semibold rounded-xl hover:bg-stone-500 hover:shadow-lg hover:shadow-stone-600/50 transition-all duration-300 hover:scale-105 text-lg"
-            >
-              View My Work
-            </a>
-            <a
-              href="#contact"
-              className="px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-stone-800 hover:shadow-lg transition-all duration-300 hover:scale-105 text-lg"
-            >
-              Get In Touch
-            </a>
+        <div className="relative z-10 max-w-5xl w-full mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-center">
+            {/* Image Placeholder */}
+            <div className="hidden md:flex justify-center animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-stone-600 to-stone-800 rounded-full blur-2xl opacity-50"></div>
+                <div className="relative w-80 h-80 rounded-full border-2 border-stone-600 overflow-hidden">
+                  <img
+                    src="/photo.jpg"
+                    alt="Dawid"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Text Content */}
+            <div className="flex flex-col items-center text-center -ml-8">
+              <div className="mb-6 animate-fade-in-up" style={{ animationDelay: "0s" }}>
+                <h1 className="text-4xl md:text-6xl font-semibold leading-tight text-white">
+                  Hey, I'm <span className="text-stone-300">Dawid</span>
+                </h1>
+              </div>
+              <div className="mb-8 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+                <p className="text-xl md:text-2xl text-stone-200 mb-2 font-normal">
+                  4th Year IT Student | Full Stack Developer
+                </p>
+                <p className="text-lg text-stone-400">
+                  Crafting beautiful and functional digital experiences
+                </p>
+              </div>
+              <div
+                className="animate-fade-in-up flex gap-4 justify-center flex-wrap"
+                style={{ animationDelay: "0.2s" }}
+              >
+                <a
+                  href="#projects"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-stone-600 text-white font-semibold rounded-xl hover:bg-stone-500 hover:shadow-lg hover:shadow-stone-600/50 transition-all duration-300 text-lg"
+                >
+                  View My Work
+                </a>
+                <a
+                  href="#contact"
+                  className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-stone-800 hover:shadow-lg transition-all duration-300 text-lg"
+                >
+                  Get In Touch
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
