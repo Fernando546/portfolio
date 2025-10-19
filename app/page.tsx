@@ -9,6 +9,8 @@ import { StarsBackground } from "@/components/ui/stars-background";
 import { ShootingStars } from "@/components/ui/shooting-stars";
 import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
 import { FloatingDock } from "@/components/ui/floating-dock";
+import { Spotlight } from "@/components/ui/spotlight-new";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { IconMail, IconBrandGithub, IconBrandLinkedin } from "@tabler/icons-react";
 import { useState } from "react";
 
@@ -117,6 +119,11 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-6 pt-20 overflow-hidden bg-gradient-to-br from-stone-800 to-stone-900">
+        <Spotlight
+          gradientFirst="radial-gradient(68.54% 68.72% at 55.02% 31.46%, hsla(41, 100%, 85%, .08) 0, hsla(41, 100%, 55%, .02) 50%, hsla(41, 100%, 45%, 0) 80%)"
+          gradientSecond="radial-gradient(50% 50% at 50% 50%, hsla(41, 100%, 85%, .06) 0, hsla(41, 100%, 55%, .02) 80%, transparent 100%)"
+          gradientThird="radial-gradient(50% 50% at 50% 50%, hsla(41, 100%, 85%, .04) 0, hsla(41, 100%, 45%, .02) 80%, transparent 100%)"
+        />
         <StarsBackground
           starDensity={0.0001}
           allStarsTwinkle={true}
@@ -127,7 +134,7 @@ export default function Home() {
           minSpeed={10}
           maxSpeed={30}
           minDelay={1200}
-          maxDelay={4200}
+          maxDelay={3000}
           starColor="#E8DAEF"
           trailColor="#B19CD9"
           className="absolute inset-0"
@@ -169,18 +176,26 @@ export default function Home() {
                 className="animate-fade-in-up flex gap-4 justify-center flex-wrap"
                 style={{ animationDelay: "0.2s" }}
               >
-                <a
-                  href="#projects"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-stone-600 text-white font-semibold rounded-xl hover:bg-stone-500 hover:shadow-lg hover:shadow-stone-600/50 transition-all duration-300 text-lg"
+                <HoverBorderGradient
+                  containerClassName="rounded-lg"
+                  className="px-6 py-2 bg-stone-600 text-white font-semibold text-sm"
+                  duration={1}
+                  clockwise={true}
                 >
-                  View My Work
-                </a>
-                <a
-                  href="#contact"
-                  className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-stone-800 hover:shadow-lg transition-all duration-300 text-lg"
+                  <a href="#projects" className="flex items-center justify-center w-full h-full">
+                    View My Work
+                  </a>
+                </HoverBorderGradient>
+                <HoverBorderGradient
+                  containerClassName="rounded-lg"
+                  className="px-6 py-2 text-white font-semibold text-sm"
+                  duration={1}
+                  clockwise={true}
                 >
-                  Get In Touch
-                </a>
+                  <a href="#contact" className="flex items-center justify-center w-full h-full">
+                    Get In Touch
+                  </a>
+                </HoverBorderGradient>
               </div>
             </div>
           </div>
