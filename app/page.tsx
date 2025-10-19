@@ -11,7 +11,7 @@ import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect
 import { FloatingDock } from "@/components/ui/floating-dock";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
-import { IconMail, IconBrandGithub, IconBrandLinkedin, IconBallBasketball, IconWifi, IconCode, IconPencil, IconMusic } from "@tabler/icons-react";
+import { IconMail, IconBrandGithub, IconBrandLinkedin, IconBallBasketball, IconWifi, IconCode, IconBrain, IconMusic, IconDrone } from "@tabler/icons-react";
 import { useState } from "react";
 
 export default function Home() {
@@ -160,7 +160,7 @@ export default function Home() {
             {/* Text Content */}
             <div className="flex flex-col items-center text-center -ml-8">
               <div className="mb-6 animate-fade-in-up" style={{ animationDelay: "0s" }}>
-                <h1 className="text-4xl md:text-6xl font-semibold leading-tight text-white">
+                <h1 className="text-4xl md:text-7xl font-semibold leading-tight text-white">
                   Hey, I'm <span className="text-stone-300">Dawid</span>
                 </h1>
               </div>
@@ -376,15 +376,21 @@ export default function Home() {
             />
 
             <HobbyCard
-              title="Tech Writing"
-              description="Documenting my learning journey and sharing insights about web development on blogs and platforms."
-              icon={<IconPencil size={28} />}
+              title="Artificial Intelligence"
+              description="Fascinated by AI and machine learning possibilities. Exploring new AI technologies, their potential applications, and how they can revolutionize various industries."
+              icon={<IconBrain size={28} />}
             />
 
             <HobbyCard
               title="Music"
               description="Enjoys listening to various genres and exploring music production tools."
               icon={<IconMusic size={28} />}
+            />
+
+            <HobbyCard
+              title="FPV Drones"
+              description="Flying FPV drones, especially DJI Avata 2. Passionate about drone racing and capturing aerial footage with first-person view technology."
+              icon={<IconDrone size={28} />}
             />
           </div>
         </div>
