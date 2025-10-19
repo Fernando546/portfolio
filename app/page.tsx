@@ -11,7 +11,7 @@ import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect
 import { FloatingDock } from "@/components/ui/floating-dock";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
-import { IconMail, IconBrandGithub, IconBrandLinkedin } from "@tabler/icons-react";
+import { IconMail, IconBrandGithub, IconBrandLinkedin, IconBallBasketball, IconWifi, IconCode, IconPencil, IconMusic } from "@tabler/icons-react";
 import { useState } from "react";
 
 export default function Home() {
@@ -237,7 +237,7 @@ export default function Home() {
 
             {/* Backend */}
             <SkillCard name="Node.js" proficiency="intermediate" />
-            <SkillCard name="Express.js" proficiency="beginner" />
+            <SkillCard name="C++" proficiency="beginner" />
             <SkillCard name="MongoDB" proficiency="intermediate" />
 
             {/* Tools & Other */}
@@ -360,26 +360,31 @@ export default function Home() {
             <HobbyCard
               title="Sports"
               description="Passionate about fitness - gym training and running every day to maintain a healthy lifestyle and mental clarity."
+              icon={<IconBallBasketball size={28} />}
             />
 
             <HobbyCard
               title="IoT & Hardware"
               description="Interested in Internet of Things projects, smart devices, and embedded systems development."
+              icon={<IconWifi size={28} />}
             />
 
             <HobbyCard
               title="Web Development"
               description="Building modern, responsive web applications and exploring new frameworks and technologies."
+              icon={<IconCode size={28} />}
             />
 
             <HobbyCard
               title="Tech Writing"
               description="Documenting my learning journey and sharing insights about web development on blogs and platforms."
+              icon={<IconPencil size={28} />}
             />
 
             <HobbyCard
               title="Music"
               description="Enjoys listening to various genres and exploring music production tools."
+              icon={<IconMusic size={28} />}
             />
           </div>
         </div>
@@ -424,7 +429,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-stone-700 py-8 px-6 bg-stone-800/50">
         <div className="max-w-6xl mx-auto text-center text-stone-400 text-sm">
-          <p>© 2024 Dawid. All rights reserved.</p>
+          <p>© 2025 Personal Portfolio. All rights reserved.</p>
         </div>
       </footer>
     </div>
