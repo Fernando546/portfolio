@@ -8,6 +8,8 @@ import HobbyCard from "@/components/ui/HobbyCard";
 import { StarsBackground } from "@/components/ui/stars-background";
 import { ShootingStars } from "@/components/ui/shooting-stars";
 import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
+import { FloatingDock } from "@/components/ui/floating-dock";
+import { IconMail, IconBrandGithub, IconBrandLinkedin } from "@tabler/icons-react";
 import { useState } from "react";
 
 export default function Home() {
@@ -352,52 +354,34 @@ export default function Home() {
       <section id="contact" className="relative py-20 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-stone-800/50 to-stone-900/50"></div>
         <div className="relative z-10 max-w-6xl mx-auto text-center">
-          <SectionTitle title="Let's Connect" subtitle="Get in touch" />
-
-          <p className="text-lg text-stone-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-            I'm always interested in hearing about new opportunities and collaborations. Feel free to reach out!
+          <SectionTitle title="Let's Connect" />
+          
+          <p className="text-lg text-stone-300 mb-12 leading-relaxed">
+            I'm always interested in hearing about new opportunities and collaborations.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div className="group p-6 rounded-lg border border-stone-700 bg-stone-800/30 hover:bg-stone-700/50 hover:border-stone-500 transition-all duration-300">
-              <div className="text-3xl mb-4">✉️</div>
-              <h3 className="text-lg font-semibold text-white mb-2">Email</h3>
-              <p className="text-stone-400 text-sm mb-4">Get in touch via email</p>
-              <a
-                href="mailto:contact@example.com"
-                className="inline-block px-4 py-2 bg-stone-600 text-white font-semibold rounded-lg hover:bg-stone-500 transition-all duration-300"
-              >
-                Send Email
-              </a>
-            </div>
-
-            <div className="group p-6 rounded-lg border border-stone-700 bg-stone-800/30 hover:bg-stone-700/50 hover:border-stone-500 transition-all duration-300">
-              <div className="text-3xl mb-4">💻</div>
-              <h3 className="text-lg font-semibold text-white mb-2">GitHub</h3>
-              <p className="text-stone-400 text-sm mb-4">Check out my projects</p>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-4 py-2 bg-stone-600 text-white font-semibold rounded-lg hover:bg-stone-500 transition-all duration-300"
-              >
-                Visit GitHub
-              </a>
-            </div>
-
-            <div className="group p-6 rounded-lg border border-stone-700 bg-stone-800/30 hover:bg-stone-700/50 hover:border-stone-500 transition-all duration-300">
-              <div className="text-3xl mb-4">💼</div>
-              <h3 className="text-lg font-semibold text-white mb-2">LinkedIn</h3>
-              <p className="text-stone-400 text-sm mb-4">Connect on LinkedIn</p>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-4 py-2 bg-stone-600 text-white font-semibold rounded-lg hover:bg-stone-500 transition-all duration-300"
-              >
-                View Profile
-              </a>
-            </div>
+          <div className="flex justify-center mt-12">
+            <FloatingDock
+              items={[
+                {
+                  title: "Email",
+                  icon: <IconMail className="h-full w-full text-white" />,
+                  href: "mailto:contact@example.com",
+                },
+                {
+                  title: "GitHub",
+                  icon: <IconBrandGithub className="h-full w-full text-white" />,
+                  href: "https://github.com",
+                },
+                {
+                  title: "LinkedIn",
+                  icon: <IconBrandLinkedin className="h-full w-full text-white" />,
+                  href: "https://linkedin.com",
+                },
+              ]}
+              desktopClassName="bg-stone-800 border border-stone-700 h-20 px-6 pb-4 gap-6 [&>a]:scale-125"
+              mobileClassName="bg-stone-800 border border-stone-700"
+            />
           </div>
         </div>
       </section>
