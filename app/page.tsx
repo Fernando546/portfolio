@@ -271,7 +271,7 @@ export default function Home() {
 
             <ProjectCard
               title="HEDUM - Pediatric Therapy Website"
-              description="Website created for pediatric therapy center in Zielona Góra."
+              description="Website created for pediatric therapy center in Zielona Góra. It includes information about the center, services, and contact information."
               tech={["React", "Node.js", "Next.js", "Tailwind CSS", "Website Development"]}
               link="https://www.hedum.pl/"
             />
