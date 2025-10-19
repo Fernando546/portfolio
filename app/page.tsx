@@ -306,18 +306,18 @@ export default function Home() {
               </h3>
               <div className="space-y-6">
                 <ExperienceCard
-                  title="Junior Developer"
-                  company="Tech Company"
-                  period="2024 - Present"
-                  description="Building responsive web applications and contributing to full-stack projects using modern technologies."
+                  title="Intern"
+                  company="ORLEN IT Group"
+                  period="2025"
+                  description="I learned how companies operate from the inside and gained practical experience in network administration."
                   type="work"
                 />
 
                 <ExperienceCard
-                  title="Freelance Developer"
-                  company="Self-employed"
-                  period="2023 - Present"
-                  description="Developing custom web solutions for small businesses and startups."
+                  title="Apprentice"
+                  company="Perceptus"
+                  period="2020"
+                  description="Developed foundational knowledge in sector-specific software and hardware."
                   type="work"
                 />
               </div>
@@ -331,17 +331,17 @@ export default function Home() {
               <div className="space-y-6">
                 <ExperienceCard
                   title="4th Year Student"
-                  company="University"
+                  company="University of Zielona Góra"
                   period="2021 - 2025"
-                  description="Majoring in Computer Science with focus on web and mobile development."
+                  description="Majoring in Computer Science with focus on web development and embedded systems."
                   type="education"
                 />
 
                 <ExperienceCard
-                  title="Advanced Web Development"
-                  company="Online Courses"
-                  period="2022 - 2024"
-                  description="Completed certifications in React, Node.js, and Full-Stack Development."
+                  title="Middle School"
+                  company="ZSEIS Elektronik Zielona Góra"
+                  period="2017 - 2021"
+                  description="Completed middle school education with IT technician specialization."
                   type="education"
                 />
               </div>
@@ -400,17 +400,17 @@ export default function Home() {
                 {
                   title: "Email",
                   icon: <IconMail className="h-full w-full text-white" />,
-                  href: "mailto:contact@example.com",
+                  href: "mailto:dawid.ferus546@gmail.com",
                 },
                 {
                   title: "GitHub",
                   icon: <IconBrandGithub className="h-full w-full text-white" />,
-                  href: "https://github.com",
+                  href: "https://github.com/Fernando546",
                 },
                 {
                   title: "LinkedIn",
                   icon: <IconBrandLinkedin className="h-full w-full text-white" />,
-                  href: "https://linkedin.com",
+                  href: "https://www.linkedin.com/in/dawid-feru%C5%9B-210924197/",
                 },
               ]}
               desktopClassName="bg-stone-800 border border-stone-700 h-20 px-6 pb-4 gap-6 [&>a]:scale-125"
