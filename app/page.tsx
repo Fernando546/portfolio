@@ -25,7 +25,7 @@ export default function Home() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="absolute left-6 md:hidden text-white hover:text-stone-300 transition-colors"
+            className="absolute right-6 md:hidden text-white hover:text-stone-300 transition-colors"
           >
             <svg
               className="w-6 h-6"
@@ -144,10 +144,10 @@ export default function Home() {
         <div className="relative z-10 max-w-5xl w-full mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-center">
             {/* Image Placeholder */}
-            <div className="hidden md:flex justify-center animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+            <div className="flex md:flex justify-center order-first md:order-none animate-fade-in-up mb-6 md:mb-0" style={{ animationDelay: "0.2s" }}>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-stone-600 to-stone-800 rounded-full blur-2xl opacity-50"></div>
-                <div className="relative w-80 h-80 rounded-full border-2 border-stone-600 overflow-hidden">
+                <div className="relative w-56 md:w-80 h-56 md:h-80 rounded-full border-2 border-stone-600 overflow-hidden">
                   <img
                     src="/photo.JPG"
                     alt="Dawid"
@@ -158,7 +158,7 @@ export default function Home() {
             </div>
 
             {/* Text Content */}
-            <div className="flex flex-col items-center text-center -ml-8">
+            <div className="flex flex-col items-center text-center md:-ml-8">
               <div className="mb-6 animate-fade-in-up" style={{ animationDelay: "0s" }}>
                 <h1 className="text-4xl md:text-7xl font-semibold leading-tight text-white">
                   Hey, I'm <span className="text-stone-300">Dawid</span>
