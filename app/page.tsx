@@ -407,27 +407,55 @@ export default function Home() {
           </p>
 
           <div className="flex justify-center mt-12">
-            <FloatingDock
-              items={[
-                {
-                  title: "Email",
-                  icon: <IconMail className="h-full w-full text-white" />,
-                  href: "mailto:dawid.ferus546@gmail.com",
-                },
-                {
-                  title: "GitHub",
-                  icon: <IconBrandGithub className="h-full w-full text-white" />,
-                  href: "https://github.com/Fernando546",
-                },
-                {
-                  title: "LinkedIn",
-                  icon: <IconBrandLinkedin className="h-full w-full text-white" />,
-                  href: "https://www.linkedin.com/in/dawid-feru%C5%9B-210924197/",
-                },
-              ]}
-              desktopClassName="bg-stone-800 border border-stone-700 h-20 px-6 pb-4 gap-6 [&>a]:scale-125"
-              mobileClassName="bg-stone-800 border border-stone-700"
-            />
+            {/* Desktop - FloatingDock */}
+            <div className="hidden md:flex">
+              <FloatingDock
+                items={[
+                  {
+                    title: "Email",
+                    icon: <IconMail className="h-full w-full text-white" />,
+                    href: "mailto:dawid.ferus546@gmail.com",
+                  },
+                  {
+                    title: "GitHub",
+                    icon: <IconBrandGithub className="h-full w-full text-white" />,
+                    href: "https://github.com/Fernando546",
+                  },
+                  {
+                    title: "LinkedIn",
+                    icon: <IconBrandLinkedin className="h-full w-full text-white" />,
+                    href: "https://www.linkedin.com/in/dawid-feru%C5%9B-210924197/",
+                  },
+                ]}
+                desktopClassName="bg-stone-800 border border-stone-700 h-20 px-6 pb-4 gap-6 [&>a]:scale-125"
+                mobileClassName="bg-stone-800 border border-stone-700"
+              />
+            </div>
+
+            {/* Mobile - Static Icons */}
+            <div className="md:hidden flex gap-8">
+              <a
+                href="mailto:dawid.ferus546@gmail.com"
+                className="text-stone-300 hover:text-white transition-colors"
+                title="Email"
+              >
+                <IconMail size={32} />
+              </a>
+              <a
+                href="https://github.com/Fernando546"
+                className="text-stone-300 hover:text-white transition-colors"
+                title="GitHub"
+              >
+                <IconBrandGithub size={32} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/dawid-feru%C5%9B-210924197/"
+                className="text-stone-300 hover:text-white transition-colors"
+                title="LinkedIn"
+              >
+                <IconBrandLinkedin size={32} />
+              </a>
+            </div>
           </div>
         </div>
       </section>
