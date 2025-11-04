@@ -256,7 +256,14 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <ProjectCard
-              title="Versa - AI Fashion App"
+              title="Minilytics - Website Tracking Tool"
+              description="Tool for tracking website visitors, analyzing traffic sources, and monitoring user behavior to optimize website performance."
+              tech={["React", "Node.js", "Next.js", "Tailwind CSS", "Website Development", "NPM"]}
+              github="https://github.com/Fernando546/minilytics"
+            />
+
+            <ProjectCard
+              title="Versa - AI Fashion =App"
               description="AI-powered fashion recommendation app that suggests outfits based on user preferences and help's share people's style."
               tech={[
                 "Expo",
