@@ -1,3 +1,6 @@
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { useRef } from "react";
+
 interface ProjectCardProps {
   title: string;
   description: string;
@@ -13,9 +16,67 @@ export default function ProjectCard({
   link,
   github,
 }: ProjectCardProps) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
+
+  const rotateX = useTransform(
+    mouseYSpring,
+    [-0.5, 0.5],
+    ["17.5deg", "-17.5deg"]
+  );
+  const rotateY = useTransform(
+    mouseXSpring,
+    [-0.5, 0.5],
+    ["-17.5deg", "17.5deg"]
+  );
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+
+    const rect = ref.current.getBoundingClientRect();
+
+    const width = rect.width;
+    const height = rect.height;
+
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   return (
-    <div className="group animate-fade-in-up relative overflow-hidden rounded-lg border border-stone-700 bg-stone-800/50 hover:bg-stone-700/70 hover:border-stone-600 hover:shadow-lg transition-all duration-300 p-6 backdrop-blur-sm">
-      <div className="relative z-10">
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateY,
+        rotateX,
+        transformStyle: "preserve-3d",
+      }}
+      className="group animate-fade-in-up relative overflow-hidden rounded-lg border border-stone-700 bg-stone-800/50 hover:bg-stone-700/70 hover:border-stone-600 hover:shadow-lg transition-all duration-300 p-6 backdrop-blur-sm"
+    >
+      <div
+        style={{
+          transform: "translateZ(75px)",
+          transformStyle: "preserve-3d",
+        }}
+        className="relative z-10"
+      >
         <h3 className="text-xl font-semibold text-white mb-3">{title}</h3>
         <p className="text-stone-400 mb-4 text-sm leading-relaxed">
           {description}
@@ -53,6 +114,6 @@ export default function ProjectCard({
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

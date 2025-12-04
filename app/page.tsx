@@ -13,6 +13,7 @@ import { Spotlight } from "@/components/ui/spotlight-new";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { IconMail, IconBrandGithub, IconBrandLinkedin, IconBallBasketball, IconWifi, IconCode, IconBrain, IconMusic, IconDrone } from "@tabler/icons-react";
 import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,12 +21,28 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-stone-900 text-white">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-stone-900/80 backdrop-blur-sm border-b border-stone-700 z-50">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-center relative">
+      {/* Navigation */}
+      <motion.nav
+        layout
+        initial={false}
+        className={`fixed z-50 backdrop-blur-md border border-stone-700/50 shadow-lg shadow-black/20 overflow-hidden
+        ${isOpen
+            ? "top-6 w-[300px] rounded-2xl left-0 right-0 mx-auto bg-stone-900/90"
+            : "top-6 right-6 w-12 h-12 rounded-full bg-stone-900/60"}
+        md:!w-[90%] md:!max-w-2xl md:!h-auto md:!rounded-full md:!top-6 md:!right-auto md:!left-1/2 md:!-translate-x-1/2 md:!mx-0 md:!bg-stone-900/60
+      `}
+        transition={{
+          type: "spring",
+          stiffness: 300,
+          damping: 30,
+        }}
+      >
+        <div className="md:px-6 md:py-3 flex items-center justify-between md:justify-center w-full min-h-[48px]">
           {/* Mobile Menu Button */}
-          <button
+          <motion.button
+            layout
             onClick={() => setIsOpen(!isOpen)}
-            className="absolute right-6 md:hidden text-white hover:text-stone-300 transition-colors"
+            className={`md:hidden text-white hover:text-stone-300 transition-colors flex items-center justify-center w-12 h-12 absolute top-0 right-0 z-20`}
           >
             <svg
               className="w-6 h-6"
@@ -49,73 +66,81 @@ export default function Home() {
                 />
               )}
             </svg>
-          </button>
+          </motion.button>
 
           {/* Desktop Navigation - Centered */}
-          <div className="hidden md:flex gap-12">
+          <div className="hidden md:flex gap-8 items-center w-full justify-center">
             <a
               href="#skills"
-              className="text-sm text-stone-300 hover:text-white transition-colors font-medium"
+              className="text-sm text-stone-300 hover:text-white transition-all hover:scale-105 font-medium px-4 py-2 rounded-full hover:bg-stone-800/50"
             >
               Skills
             </a>
             <a
               href="#projects"
-              className="text-sm text-stone-300 hover:text-white transition-colors font-medium"
+              className="text-sm text-stone-300 hover:text-white transition-all hover:scale-105 font-medium px-4 py-2 rounded-full hover:bg-stone-800/50"
             >
               Projects
             </a>
             <a
               href="#experience"
-              className="text-sm text-stone-300 hover:text-white transition-colors font-medium"
+              className="text-sm text-stone-300 hover:text-white transition-all hover:scale-105 font-medium px-4 py-2 rounded-full hover:bg-stone-800/50"
             >
               Experience
             </a>
             <a
               href="#hobbies"
-              className="text-sm text-stone-300 hover:text-white transition-colors font-medium"
+              className="text-sm text-stone-300 hover:text-white transition-all hover:scale-105 font-medium px-4 py-2 rounded-full hover:bg-stone-800/50"
             >
               Hobbies
             </a>
           </div>
         </div>
 
-        {/* Mobile Navigation - Dropdown */}
-        {isOpen && (
-          <div className="md:hidden border-t border-stone-700 bg-stone-900/90">
-            <div className="px-6 py-4 space-y-3 flex flex-col">
-              <a
-                href="#skills"
-                className="text-sm text-stone-300 hover:text-white transition-colors font-medium block"
-                onClick={() => setIsOpen(false)}
-              >
-                Skills
-              </a>
-              <a
-                href="#projects"
-                className="text-sm text-stone-300 hover:text-white transition-colors font-medium block"
-                onClick={() => setIsOpen(false)}
-              >
-                Projects
-              </a>
-              <a
-                href="#experience"
-                className="text-sm text-stone-300 hover:text-white transition-colors font-medium block"
-                onClick={() => setIsOpen(false)}
-              >
-                Experience
-              </a>
-              <a
-                href="#hobbies"
-                className="text-sm text-stone-300 hover:text-white transition-colors font-medium block"
-                onClick={() => setIsOpen(false)}
-              >
-                Hobbies
-              </a>
-            </div>
-          </div>
-        )}
-      </nav>
+        {/* Mobile Navigation - Dropdown Content */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="md:hidden w-full"
+            >
+              <div className="px-4 pb-4 space-y-2 flex flex-col items-center mt-2">
+                <a
+                  href="#skills"
+                  className="text-sm text-stone-300 hover:text-white transition-colors font-medium block w-full text-center py-2 hover:bg-stone-800/50 rounded-lg"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Skills
+                </a>
+                <a
+                  href="#projects"
+                  className="text-sm text-stone-300 hover:text-white transition-colors font-medium block w-full text-center py-2 hover:bg-stone-800/50 rounded-lg"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Projects
+                </a>
+                <a
+                  href="#experience"
+                  className="text-sm text-stone-300 hover:text-white transition-colors font-medium block w-full text-center py-2 hover:bg-stone-800/50 rounded-lg"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Experience
+                </a>
+                <a
+                  href="#hobbies"
+                  className="text-sm text-stone-300 hover:text-white transition-colors font-medium block w-full text-center py-2 hover:bg-stone-800/50 rounded-lg"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Hobbies
+                </a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-6 pt-20 overflow-hidden bg-gradient-to-br from-stone-800 to-stone-900">
@@ -255,6 +280,13 @@ export default function Home() {
           <SectionTitle title="Projects" subtitle="Featured work" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <ProjectCard
+              title="Minilytics - Website Tracking Tool"
+              description="Tool for tracking website visitors, analyzing traffic sources, and monitoring user behavior to optimize website performance."
+              tech={["React", "Node.js", "Next.js", "Tailwind CSS", "Website Development", "NPM"]}
+              github="https://github.com/Fernando546/minilytics"
+            />
+
             <ProjectCard
               title="Versa - AI Fashion App"
               description="AI-powered fashion recommendation app that suggests outfits based on user preferences and help's share people's style."
@@ -401,7 +433,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-stone-800/50 to-stone-900/50"></div>
         <div className="relative z-10 max-w-6xl mx-auto text-center">
           <SectionTitle title="Let's Connect" />
-          
+
           <p className="text-lg text-stone-300 mb-12 leading-relaxed">
             I'm always interested in hearing about new opportunities and collaborations.
           </p>

@@ -14,7 +14,7 @@ export default function ExperienceCard({
   type = "work",
 }: ExperienceCardProps) {
   return (
-    <div className="group animate-fade-in-up relative pl-8 pb-8 border-l-2 border-stone-700 hover:border-stone-500 transition-all duration-300">
+    <div className="group animate-fade-in-up relative pl-8 border-l-2 border-stone-700 hover:border-stone-500 transition-all duration-300">
       <div className="rounded-lg p-4 bg-stone-800/30 border border-stone-700 hover:border-stone-600 hover:shadow-sm transition-all duration-300">
         <div className="flex justify-between items-start mb-2">
           <div>
