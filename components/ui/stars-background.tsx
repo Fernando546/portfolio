@@ -34,6 +34,8 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
 }) => {
   const [stars, setStars] = useState<StarProps[]>([]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isVisibleRef = useRef(true);
+  const animFrameRef = useRef<number>(0);
 
   const generateStars = useCallback(
     (width: number, height: number): StarProps[] => {
@@ -49,7 +51,7 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
           opacity: Math.random() * 0.5 + 0.5,
           twinkleSpeed: shouldTwinkle
             ? minTwinkleSpeed +
-              Math.random() * (maxTwinkleSpeed - minTwinkleSpeed)
+            Math.random() * (maxTwinkleSpeed - minTwinkleSpeed)
             : null,
         };
       });
@@ -89,14 +91,23 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
         resizeObserver.unobserve(canvasRef.current);
       }
     };
-  }, [
-    starDensity,
-    allStarsTwinkle,
-    twinkleProbability,
-    minTwinkleSpeed,
-    maxTwinkleSpeed,
-    generateStars,
-  ]);
+  }, [generateStars]);
+
+  // IntersectionObserver to pause animation when off-screen
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(canvas);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -105,9 +116,20 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let animationFrameId: number;
+    let lastTime = 0;
+    const FPS_INTERVAL = 1000 / 30; // Cap at 30fps to reduce GPU usage
 
-    const render = () => {
+    const render = (timestamp: number) => {
+      animFrameRef.current = requestAnimationFrame(render);
+
+      // Skip rendering if not visible
+      if (!isVisibleRef.current) return;
+
+      // Throttle to 30fps
+      const elapsed = timestamp - lastTime;
+      if (elapsed < FPS_INTERVAL) return;
+      lastTime = timestamp - (elapsed % FPS_INTERVAL);
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       stars.forEach((star) => {
         ctx.beginPath();
@@ -121,14 +143,12 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
             Math.abs(Math.sin((Date.now() * 0.001) / star.twinkleSpeed) * 0.5);
         }
       });
-
-      animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    animFrameRef.current = requestAnimationFrame(render);
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      cancelAnimationFrame(animFrameRef.current);
     };
   }, [stars]);
 
@@ -136,6 +156,7 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
     <canvas
       ref={canvasRef}
       className={cn("h-full w-full absolute inset-0", className)}
+      style={{ willChange: "contents" }}
     />
   );
 };

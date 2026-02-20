@@ -9,9 +9,9 @@ import { StarsBackground } from "@/components/ui/stars-background";
 import { ShootingStars } from "@/components/ui/shooting-stars";
 import { FloatingDock } from "@/components/ui/floating-dock";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
-import { IconMail, IconBrandGithub, IconBrandLinkedin, IconBallBasketball, IconWifi, IconCode, IconBrain, IconMusic, IconDrone, IconTerminal2 } from "@tabler/icons-react";
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
+import { IconMail, IconBrandGithub, IconBrandLinkedin, IconBallBasketball, IconWifi, IconCode, IconBrain, IconMusic, IconDrone, IconTerminal2, IconChevronDown } from "@tabler/icons-react";
+import { useState, memo } from "react";
+import { motion, AnimatePresence } from "motion/react";
 
 function CodeRain() {
   const lines = [
@@ -78,15 +78,31 @@ function SectionDivider({ variant = "fade" }: { variant?: "fade" | "line" | "dot
   );
 }
 
+// Memoize heavy background components to prevent re-renders
+const MemoStars = memo(StarsBackground);
+const MemoShootingStars = memo(ShootingStars);
+
+// Skills data
+const allSkills = [
+  { name: "TypeScript", proficiency: "intermediate" as const },
+  { name: "React", proficiency: "intermediate" as const },
+  { name: "Next.js", proficiency: "intermediate" as const },
+  { name: "React Native", proficiency: "intermediate" as const },
+  { name: "Expo", proficiency: "intermediate" as const },
+  { name: "Mobile Development", proficiency: "intermediate" as const },
+  { name: "Node.js", proficiency: "intermediate" as const },
+  { name: "C++", proficiency: "beginner" as const },
+  { name: "MongoDB", proficiency: "intermediate" as const },
+  { name: "Tailwind CSS", proficiency: "intermediate" as const },
+  { name: "Git & GitHub", proficiency: "intermediate" as const },
+  { name: "REST APIs", proficiency: "beginner" as const },
+];
+
+const MOBILE_SKILLS_VISIBLE = 6;
+
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
-  const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const [showAllSkills, setShowAllSkills] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#09090b] text-zinc-200">
@@ -151,14 +167,14 @@ export default function Home() {
       </motion.nav>
 
       {/* ===== HERO SECTION ===== */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center px-6 pt-20 overflow-hidden">
-        <StarsBackground
+      <section className="relative min-h-screen flex items-center justify-center px-6 pt-20 overflow-hidden">
+        <MemoStars
           starDensity={0.00012}
           allStarsTwinkle={true}
           twinkleProbability={0.5}
           className="absolute inset-0"
         />
-        <ShootingStars
+        <MemoShootingStars
           minSpeed={10}
           maxSpeed={25}
           minDelay={2000}
@@ -169,13 +185,9 @@ export default function Home() {
         />
         <CodeRain />
 
-        {/* Subtle glow */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/[0.03] rounded-full blur-[120px]" />
 
-        <motion.div
-          style={{ opacity: heroOpacity, y: heroY }}
-          className="relative z-10 max-w-5xl w-full mx-auto px-4"
-        >
+        <div className="relative z-10 max-w-5xl w-full mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             {/* Avatar */}
             <div className="flex justify-center order-first md:order-none mb-6 md:mb-0">
@@ -192,8 +204,8 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* Text */}
-            <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            {/* Text — block centered on mobile, left on desktop; text inside always left */}
+            <div className="flex flex-col items-center md:items-start text-left">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -219,7 +231,7 @@ export default function Home() {
                   <div className="terminal-dot green" style={{ width: 8, height: 8 }} />
                   <span className="ml-2 text-[10px] font-mono text-zinc-600">~/.bio</span>
                 </div>
-                <div className="font-mono text-sm space-y-1.5">
+                <div className="font-mono text-sm space-y-1.5 text-left">
                   <p>
                     <span className="text-emerald-400">→</span>{" "}
                     <span className="text-zinc-500">role:</span>{" "}
@@ -267,7 +279,7 @@ export default function Home() {
               </motion.div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
@@ -289,20 +301,38 @@ export default function Home() {
         <div className="max-w-6xl mx-auto relative z-10">
           <SectionTitle title="Skills" subtitle="what I work with" />
 
+          {/* Desktop: all skills visible / Mobile: collapsible */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            <SkillCard name="TypeScript" proficiency="intermediate" />
-            <SkillCard name="React" proficiency="intermediate" />
-            <SkillCard name="Next.js" proficiency="intermediate" />
-            <SkillCard name="React Native" proficiency="intermediate" />
-            <SkillCard name="Expo" proficiency="intermediate" />
-            <SkillCard name="Mobile Development" proficiency="intermediate" />
-            <SkillCard name="Node.js" proficiency="intermediate" />
-            <SkillCard name="C++" proficiency="beginner" />
-            <SkillCard name="MongoDB" proficiency="intermediate" />
-            <SkillCard name="Tailwind CSS" proficiency="intermediate" />
-            <SkillCard name="Git & GitHub" proficiency="intermediate" />
-            <SkillCard name="REST APIs" proficiency="beginner" />
+            {allSkills.map((skill, index) => (
+              <div
+                key={skill.name}
+                className={`${!showAllSkills && index >= MOBILE_SKILLS_VISIBLE
+                  ? "hidden md:block"
+                  : ""
+                  }`}
+              >
+                <SkillCard name={skill.name} proficiency={skill.proficiency} />
+              </div>
+            ))}
           </div>
+
+          {/* Show more / less button — mobile only */}
+          {allSkills.length > MOBILE_SKILLS_VISIBLE && (
+            <div className="md:hidden flex justify-center mt-6">
+              <button
+                onClick={() => setShowAllSkills(!showAllSkills)}
+                className="flex items-center gap-2 text-xs font-mono text-zinc-500 hover:text-white border border-zinc-800 hover:border-zinc-700 px-4 py-2 rounded-lg transition-all duration-300 hover:bg-white/5"
+              >
+                {showAllSkills ? "Show less" : `Show all (${allSkills.length})`}
+                <motion.div
+                  animate={{ rotate: showAllSkills ? 180 : 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <IconChevronDown size={14} />
+                </motion.div>
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
