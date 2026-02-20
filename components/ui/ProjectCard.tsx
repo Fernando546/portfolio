@@ -1,3 +1,5 @@
+"use client";
+
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { useRef } from "react";
 
@@ -27,30 +29,19 @@ export default function ProjectCard({
   const rotateX = useTransform(
     mouseYSpring,
     [-0.5, 0.5],
-    ["17.5deg", "-17.5deg"]
+    ["10deg", "-10deg"]
   );
   const rotateY = useTransform(
     mouseXSpring,
     [-0.5, 0.5],
-    ["-17.5deg", "17.5deg"]
+    ["-10deg", "10deg"]
   );
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
-
     const rect = ref.current.getBoundingClientRect();
-
-    const width = rect.width;
-    const height = rect.height;
-
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-
-    x.set(xPct);
-    y.set(yPct);
+    x.set(e.clientX / rect.width - rect.left / rect.width - 0.5);
+    y.set(e.clientY / rect.height - rect.top / rect.height - 0.5);
   };
 
   const handleMouseLeave = () => {
@@ -63,41 +54,62 @@ export default function ProjectCard({
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
       style={{
         rotateY,
         rotateX,
         transformStyle: "preserve-3d",
       }}
-      className="group animate-fade-in-up relative overflow-hidden rounded-lg border border-stone-700 bg-stone-800/50 hover:bg-stone-700/70 hover:border-stone-600 hover:shadow-lg transition-all duration-300 p-6 backdrop-blur-sm"
+      className="terminal-card group"
     >
+      {/* Terminal Header */}
+      <div className="terminal-header">
+        <div className="terminal-dot red" />
+        <div className="terminal-dot yellow" />
+        <div className="terminal-dot green" />
+        <span className="ml-3 text-xs font-mono text-zinc-600 truncate">
+          {title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}
+        </span>
+      </div>
+
+      {/* Content */}
       <div
         style={{
-          transform: "translateZ(75px)",
+          transform: "translateZ(50px)",
           transformStyle: "preserve-3d",
         }}
-        className="relative z-10"
+        className="relative z-10 p-6"
       >
-        <h3 className="text-xl font-semibold text-white mb-3">{title}</h3>
-        <p className="text-stone-400 mb-4 text-sm leading-relaxed">
+        <h3 className="text-lg font-bold text-white mb-2 font-mono">
+          {title}
+        </h3>
+        <p className="text-zinc-400 mb-4 text-sm leading-relaxed">
           {description}
         </p>
-        <div className="flex flex-wrap gap-2 mb-4">
+
+        {/* Tech tags */}
+        <div className="flex flex-wrap gap-1.5 mb-5">
           {tech.map((t) => (
             <span
               key={t}
-              className="inline-block px-3 py-1 bg-stone-700/80 border border-stone-600 text-stone-200 text-xs rounded-full hover:border-stone-500 hover:shadow-lg hover:shadow-stone-500/30 transition-all duration-300 font-medium"
+              className="inline-block px-2 py-0.5 bg-zinc-900 border border-zinc-800 text-zinc-400 text-xs rounded font-mono hover:border-zinc-600 transition-all duration-300"
             >
               {t}
             </span>
           ))}
         </div>
-        <div className="flex gap-4">
+
+        {/* Links */}
+        <div className="flex gap-3 pt-4 border-t border-zinc-800/50">
           {link && (
             <a
               href={link}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-semibold text-white bg-stone-600 px-4 py-2 rounded-lg hover:bg-stone-500 hover:shadow-lg hover:shadow-stone-600/50 transition-all duration-300"
+              className="text-xs font-mono font-medium text-emerald-400 border border-emerald-500/20 px-4 py-2 rounded-md hover:bg-emerald-500/5 hover:border-emerald-400/40 transition-all duration-300"
             >
               Live Demo →
             </a>
@@ -107,9 +119,9 @@ export default function ProjectCard({
               href={github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-semibold text-white border border-white px-4 py-2 rounded-lg hover:bg-white hover:text-stone-800 transition-all duration-300"
+              className="text-xs font-mono font-medium text-zinc-300 border border-zinc-700 px-4 py-2 rounded-md hover:bg-zinc-800 hover:border-zinc-600 transition-all duration-300"
             >
-              GitHub →
+              Source →
             </a>
           )}
         </div>

@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-stone-800 text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#09090b] text-zinc-200`}
       >
         <SmoothScroll />
         <CustomCursor />

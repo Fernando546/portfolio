@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "motion/react";
+
 interface SkillCardProps {
   name: string;
   icon?: string;
@@ -5,22 +9,39 @@ interface SkillCardProps {
 }
 
 export default function SkillCard({ name, proficiency }: SkillCardProps) {
-  const proficiencyLabel = {
-    beginner: "Familiar",
-    intermediate: "Intermediate",
-    advanced: "Advanced",
+  const proficiencyConfig = {
+    beginner: { label: "Familiar", barWidth: "w-1/3" },
+    intermediate: { label: "Intermediate", barWidth: "w-2/3" },
+    advanced: { label: "Advanced", barWidth: "w-full" },
   };
 
+  const config = proficiency ? proficiencyConfig[proficiency] : null;
+
   return (
-    <div className="group animate-fade-in-up relative p-6 rounded-lg border border-stone-700 bg-stone-800/50 hover:bg-stone-700/70 hover:border-stone-600 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
-      <div className="relative z-10 flex justify-between items-center">
-        <p className="text-lg font-semibold text-white">{name}</p>
-        {proficiency && (
-          <span className="ml-4 px-3 py-1 bg-stone-600/50 text-stone-200 text-xs font-semibold rounded-full border border-stone-600">
-            {proficiencyLabel[proficiency]}
-          </span>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4 }}
+      className="terminal-card group p-5 hover:translate-y-[-2px]"
+    >
+      <div className="relative z-10">
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-emerald-400 font-mono text-xs">$</span>
+          <span className="text-white font-mono text-sm font-medium">{name}</span>
+        </div>
+
+        {config && (
+          <div className="space-y-2">
+            <span className="font-mono text-xs text-zinc-500">
+              {config.label}
+            </span>
+            <div className="h-px bg-zinc-800 rounded-full overflow-hidden">
+              <div className={`h-full bg-emerald-400/40 rounded-full ${config.barWidth} transition-all duration-500`} />
+            </div>
+          </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }

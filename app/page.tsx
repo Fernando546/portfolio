@@ -7,265 +7,298 @@ import ExperienceCard from "@/components/ui/ExperienceCard";
 import HobbyCard from "@/components/ui/HobbyCard";
 import { StarsBackground } from "@/components/ui/stars-background";
 import { ShootingStars } from "@/components/ui/shooting-stars";
-import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
 import { FloatingDock } from "@/components/ui/floating-dock";
-import { Spotlight } from "@/components/ui/spotlight-new";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
-import { IconMail, IconBrandGithub, IconBrandLinkedin, IconBallBasketball, IconWifi, IconCode, IconBrain, IconMusic, IconDrone } from "@tabler/icons-react";
-import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { IconMail, IconBrandGithub, IconBrandLinkedin, IconBallBasketball, IconWifi, IconCode, IconBrain, IconMusic, IconDrone, IconTerminal2 } from "@tabler/icons-react";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
+
+function CodeRain() {
+  const lines = [
+    "const developer = new Developer();",
+    "while(gym) { pump(); }",
+    "git commit -m 'andreus'",
+    "npm install minilitics",
+    "export default Portfolio",
+    "// TODO: listen opeth",
+    "ssh user@production",
+  ];
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.03]">
+      {lines.map((line, i) => (
+        <div
+          key={i}
+          className="absolute font-mono text-white text-xs whitespace-nowrap"
+          style={{
+            left: `${(i * 17) % 90}%`,
+            top: `${(i * 14) % 85}%`,
+            transform: `rotate(${-3 + (i % 3) * 3}deg)`,
+          }}
+        >
+          {line}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function SectionDivider({ variant = "fade" }: { variant?: "fade" | "line" | "dots" | "code" }) {
+  if (variant === "line") {
+    return (
+      <div className="relative h-px mx-auto max-w-4xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-800 to-transparent" />
+        <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-emerald-400/30 rounded-full" />
+      </div>
+    );
+  }
+
+  if (variant === "dots") {
+    return (
+      <div className="flex items-center justify-center gap-2 py-4">
+        {[...Array(3)].map((_, i) => (
+          <div key={i} className="w-1 h-1 bg-zinc-700 rounded-full" />
+        ))}
+      </div>
+    );
+  }
+
+  if (variant === "code") {
+    return (
+      <div className="flex items-center justify-center py-6">
+        <span className="font-mono text-[10px] text-zinc-700 tracking-widest">
+          {"// "}---{"---"}---{"---"}---{"---"}---{"---"}---{"---"}
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="h-24 bg-gradient-to-b from-transparent to-transparent" />
+  );
+}
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
   return (
-    <div className="min-h-screen bg-stone-900 text-white">
-      {/* Navigation */}
-      {/* Navigation */}
+    <div className="min-h-screen bg-[#09090b] text-zinc-200">
+      {/* ===== NAVIGATION ===== */}
       <motion.nav
         layout
         initial={false}
-        className={`fixed z-50 backdrop-blur-md border border-stone-700/50 shadow-lg shadow-black/20 overflow-hidden
+        className={`fixed z-50 backdrop-blur-xl border border-zinc-800/60 shadow-lg shadow-black/40 overflow-hidden
         ${isOpen
-            ? "top-6 w-[300px] rounded-2xl left-0 right-0 mx-auto bg-stone-900/90"
-            : "top-6 right-6 w-12 h-12 rounded-full bg-stone-900/60"}
-        md:!w-[90%] md:!max-w-2xl md:!h-auto md:!rounded-full md:!top-6 md:!right-auto md:!left-1/2 md:!-translate-x-1/2 md:!mx-0 md:!bg-stone-900/60
+            ? "top-4 w-[280px] rounded-xl left-0 right-0 mx-auto bg-[#09090b]/95"
+            : "top-4 right-4 w-11 h-11 rounded-full bg-[#09090b]/80"}
+        md:!w-[90%] md:!max-w-xl md:!h-auto md:!rounded-full md:!top-4 md:!right-auto md:!left-1/2 md:!-translate-x-1/2 md:!mx-0 md:!bg-[#09090b]/80
       `}
-        transition={{
-          type: "spring",
-          stiffness: 300,
-          damping: 30,
-        }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
       >
-        <div className="md:px-6 md:py-3 flex items-center justify-between md:justify-center w-full min-h-[48px]">
-          {/* Mobile Menu Button */}
+        <div className="md:px-6 md:py-3 flex items-center justify-between md:justify-center w-full min-h-[44px]">
           <motion.button
             layout
             onClick={() => setIsOpen(!isOpen)}
-            className={`md:hidden text-white hover:text-stone-300 transition-colors flex items-center justify-center w-12 h-12 absolute top-0 right-0 z-20`}
+            className="md:hidden text-zinc-400 hover:text-white transition-colors flex items-center justify-center w-11 h-11 absolute top-0 right-0 z-20"
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              {isOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
+            <IconTerminal2 size={18} />
           </motion.button>
 
-          {/* Desktop Navigation - Centered */}
-          <div className="hidden md:flex gap-8 items-center w-full justify-center">
-            <a
-              href="#skills"
-              className="text-sm text-stone-300 hover:text-white transition-all hover:scale-105 font-medium px-4 py-2 rounded-full hover:bg-stone-800/50"
-            >
-              Skills
-            </a>
-            <a
-              href="#projects"
-              className="text-sm text-stone-300 hover:text-white transition-all hover:scale-105 font-medium px-4 py-2 rounded-full hover:bg-stone-800/50"
-            >
-              Projects
-            </a>
-            <a
-              href="#experience"
-              className="text-sm text-stone-300 hover:text-white transition-all hover:scale-105 font-medium px-4 py-2 rounded-full hover:bg-stone-800/50"
-            >
-              Experience
-            </a>
-            <a
-              href="#hobbies"
-              className="text-sm text-stone-300 hover:text-white transition-all hover:scale-105 font-medium px-4 py-2 rounded-full hover:bg-stone-800/50"
-            >
-              Hobbies
-            </a>
+          <div className="hidden md:flex gap-1 items-center w-full justify-center">
+            {["skills", "projects", "experience", "hobbies", "contact"].map((item) => (
+              <a
+                key={item}
+                href={`#${item}`}
+                className="text-xs font-mono text-zinc-500 hover:text-white transition-all font-medium px-3 py-1.5 rounded-full hover:bg-white/5"
+              >
+                {item}
+              </a>
+            ))}
           </div>
         </div>
 
-        {/* Mobile Navigation - Dropdown Content */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
+              transition={{ duration: 0.25 }}
               className="md:hidden w-full"
             >
-              <div className="px-4 pb-4 space-y-2 flex flex-col items-center mt-2">
-                <a
-                  href="#skills"
-                  className="text-sm text-stone-300 hover:text-white transition-colors font-medium block w-full text-center py-2 hover:bg-stone-800/50 rounded-lg"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Skills
-                </a>
-                <a
-                  href="#projects"
-                  className="text-sm text-stone-300 hover:text-white transition-colors font-medium block w-full text-center py-2 hover:bg-stone-800/50 rounded-lg"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Projects
-                </a>
-                <a
-                  href="#experience"
-                  className="text-sm text-stone-300 hover:text-white transition-colors font-medium block w-full text-center py-2 hover:bg-stone-800/50 rounded-lg"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Experience
-                </a>
-                <a
-                  href="#hobbies"
-                  className="text-sm text-stone-300 hover:text-white transition-colors font-medium block w-full text-center py-2 hover:bg-stone-800/50 rounded-lg"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Hobbies
-                </a>
+              <div className="px-4 pb-4 space-y-1 flex flex-col mt-1">
+                {["skills", "projects", "experience", "hobbies", "contact"].map((item) => (
+                  <a
+                    key={item}
+                    href={`#${item}`}
+                    className="text-sm font-mono text-zinc-500 hover:text-white transition-colors font-medium block w-full text-center py-2 hover:bg-white/5 rounded-lg"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item}
+                  </a>
+                ))}
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </motion.nav>
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 pt-20 overflow-hidden bg-gradient-to-br from-stone-800 to-stone-900">
-        <Spotlight
-          gradientFirst="radial-gradient(68.54% 68.72% at 55.02% 31.46%, hsla(41, 100%, 85%, .08) 0, hsla(41, 100%, 55%, .02) 50%, hsla(41, 100%, 45%, 0) 80%)"
-          gradientSecond="radial-gradient(50% 50% at 50% 50%, hsla(41, 100%, 85%, .06) 0, hsla(41, 100%, 55%, .02) 80%, transparent 100%)"
-          gradientThird="radial-gradient(50% 50% at 50% 50%, hsla(41, 100%, 85%, .04) 0, hsla(41, 100%, 45%, .02) 80%, transparent 100%)"
-        />
+      {/* ===== HERO SECTION ===== */}
+      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center px-6 pt-20 overflow-hidden">
         <StarsBackground
-          starDensity={0.0001}
+          starDensity={0.00012}
           allStarsTwinkle={true}
-          twinkleProbability={0.7}
+          twinkleProbability={0.5}
           className="absolute inset-0"
         />
         <ShootingStars
           minSpeed={10}
-          maxSpeed={30}
-          minDelay={1200}
-          maxDelay={3000}
-          starColor="#E8DAEF"
-          trailColor="#B19CD9"
+          maxSpeed={25}
+          minDelay={2000}
+          maxDelay={4000}
+          starColor="#ffffff"
+          trailColor="#4ade80"
           className="absolute inset-0"
         />
-        <div className="absolute top-0 right-0 w-96 h-96 bg-stone-600/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-stone-600/10 rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }}></div>
-        <div className="relative z-10 max-w-5xl w-full mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-center">
-            {/* Image Placeholder */}
-            <div className="flex md:flex justify-center order-first md:order-none animate-fade-in-up mb-6 md:mb-0" style={{ animationDelay: "0.2s" }}>
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-stone-600 to-stone-800 rounded-full blur-2xl opacity-50"></div>
-                <div className="relative w-56 md:w-80 h-56 md:h-80 rounded-full border-2 border-stone-600 overflow-hidden">
-                  <img
-                    src="/photo.JPG"
-                    alt="Dawid"
-                    className="w-full h-full object-cover"
-                  />
+        <CodeRain />
+
+        {/* Subtle glow */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/[0.03] rounded-full blur-[120px]" />
+
+        <motion.div
+          style={{ opacity: heroOpacity, y: heroY }}
+          className="relative z-10 max-w-5xl w-full mx-auto px-4"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            {/* Avatar */}
+            <div className="flex justify-center order-first md:order-none mb-6 md:mb-0">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="relative"
+              >
+                <div className="absolute -inset-0.5 bg-gradient-to-br from-emerald-500/20 via-transparent to-emerald-500/10 rounded-full blur-sm" />
+                <div className="relative w-48 md:w-64 h-48 md:h-64 rounded-full border border-zinc-800 overflow-hidden">
+                  <img src="/photo.JPG" alt="Dawid" className="w-full h-full object-cover" />
                 </div>
-              </div>
+              </motion.div>
             </div>
 
-            {/* Text Content */}
-            <div className="flex flex-col items-center text-center md:-ml-8">
-              <div className="mb-6 animate-fade-in-up" style={{ animationDelay: "0s" }}>
-                <h1 className="text-4xl md:text-7xl font-semibold leading-tight text-white">
-                  Hey, I'm <span className="text-stone-300">Dawid</span>
+            {/* Text */}
+            <div className="flex flex-col items-center md:items-start text-center md:text-left">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="mb-6"
+              >
+                <h1 className="text-4xl md:text-6xl font-bold leading-tight text-white font-mono tracking-tight">
+                  Hey, I&apos;m{" "}
+                  <span className="text-emerald-400">Dawid</span>
                 </h1>
-              </div>
-              <div className="mb-8 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-                <p className="text-xl md:text-2xl text-stone-200 mb-2 font-normal">
-                  4th Year IT Student | Full Stack Developer
-                </p>
-                <p className="text-lg text-stone-400">
-                  Crafting beautiful and functional digital experiences
-                </p>
-              </div>
-              <div
-                className="animate-fade-in-up flex gap-4 justify-center flex-wrap"
-                style={{ animationDelay: "0.2s" }}
+              </motion.div>
+
+              {/* Bio terminal */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
+                className="mb-8 terminal-card p-4 w-full max-w-md"
+              >
+                <div className="terminal-header !p-2 !-mx-4 !-mt-4 !mb-3 !px-3">
+                  <div className="terminal-dot red" style={{ width: 8, height: 8 }} />
+                  <div className="terminal-dot yellow" style={{ width: 8, height: 8 }} />
+                  <div className="terminal-dot green" style={{ width: 8, height: 8 }} />
+                  <span className="ml-2 text-[10px] font-mono text-zinc-600">~/.bio</span>
+                </div>
+                <div className="font-mono text-sm space-y-1.5">
+                  <p>
+                    <span className="text-emerald-400">→</span>{" "}
+                    <span className="text-zinc-500">role:</span>{" "}
+                    <span className="text-white">&quot;Full Stack Developer&quot;</span>
+                  </p>
+                  <p>
+                    <span className="text-emerald-400">→</span>{" "}
+                    <span className="text-zinc-500">education:</span>{" "}
+                    <span className="text-white">&quot;4th Year IT Student&quot;</span>
+                  </p>
+                  <p>
+                    <span className="text-emerald-400">→</span>{" "}
+                    <span className="text-zinc-500">passion:</span>{" "}
+                    <span className="text-white">&quot;Building digital experiences&quot;</span>
+                  </p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="flex gap-3 justify-center md:justify-start flex-wrap"
               >
                 <HoverBorderGradient
                   containerClassName="rounded-lg"
-                  className="px-6 py-2 bg-stone-600 text-white font-semibold text-sm"
+                  className="px-5 py-2 bg-emerald-500/5 text-white font-mono font-medium text-sm"
                   duration={1}
                   clockwise={true}
                 >
-                  <a href="#projects" className="flex items-center justify-center w-full h-full">
-                    View My Work
+                  <a href="#projects" className="flex items-center justify-center w-full h-full gap-2">
+                    View Projects
                   </a>
                 </HoverBorderGradient>
                 <HoverBorderGradient
                   containerClassName="rounded-lg"
-                  className="px-6 py-2 text-white font-semibold text-sm"
+                  className="px-5 py-2 text-zinc-400 font-mono font-medium text-sm"
                   duration={1}
                   clockwise={true}
                 >
-                  <a href="#contact" className="flex items-center justify-center w-full h-full">
+                  <a href="#contact" className="flex items-center justify-center w-full h-full gap-2">
                     Get In Touch
                   </a>
                 </HoverBorderGradient>
-              </div>
+              </motion.div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <svg
-            className="w-6 h-6 text-stone-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity }}
+            className="flex flex-col items-center gap-2"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
+            <div className="w-px h-8 bg-gradient-to-b from-transparent to-zinc-700" />
+          </motion.div>
         </div>
       </section>
 
-      {/* Skills Section */}
-      <section id="skills" className="py-20 px-6 bg-stone-700/50">
-        <div className="max-w-6xl mx-auto">
-          <SectionTitle title="Skills" subtitle="What I know" />
+      <SectionDivider variant="line" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Frontend */}
+      {/* ===== SKILLS dotted background ===== */}
+      <section id="skills" className="py-24 px-6 relative">
+        <div className="absolute inset-0 bg-dots" />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <SectionTitle title="Skills" subtitle="what I work with" />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
             <SkillCard name="TypeScript" proficiency="intermediate" />
             <SkillCard name="React" proficiency="intermediate" />
             <SkillCard name="Next.js" proficiency="intermediate" />
-
-            {/* Mobile */}
             <SkillCard name="React Native" proficiency="intermediate" />
             <SkillCard name="Expo" proficiency="intermediate" />
             <SkillCard name="Mobile Development" proficiency="intermediate" />
-
-            {/* Backend */}
             <SkillCard name="Node.js" proficiency="intermediate" />
             <SkillCard name="C++" proficiency="beginner" />
             <SkillCard name="MongoDB" proficiency="intermediate" />
-
-            {/* Tools & Other */}
             <SkillCard name="Tailwind CSS" proficiency="intermediate" />
             <SkillCard name="Git & GitHub" proficiency="intermediate" />
             <SkillCard name="REST APIs" proficiency="beginner" />
@@ -273,30 +306,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="relative py-20 px-6 overflow-hidden">
-        <BackgroundRippleEffect rows={4} cols={40} cellSize={80} />
-        <div className="max-w-6xl mx-auto relative z-10">
-          <SectionTitle title="Projects" subtitle="Featured work" />
+      <SectionDivider variant="code" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* ===== PROJECTS lines background ===== */}
+      <section id="projects" className="relative py-24 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-diag" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white/[0.01] rounded-full blur-[100px]" />
+
+        <div className="max-w-6xl mx-auto relative z-10">
+          <SectionTitle title="Projects" subtitle="things I've built" />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <ProjectCard
               title="Minilytics - Website Tracking Tool"
               description="Tool for tracking website visitors, analyzing traffic sources, and monitoring user behavior to optimize website performance."
-              tech={["React", "Node.js", "Next.js", "Tailwind CSS", "Website Development", "NPM"]}
+              tech={["React", "Node.js", "Next.js", "Tailwind CSS", "NPM"]}
               github="https://github.com/Fernando546/minilytics"
             />
 
             <ProjectCard
               title="Versa - AI Fashion App"
               description="AI-powered fashion recommendation app that suggests outfits based on user preferences and help's share people's style."
-              tech={[
-                "Expo",
-                "TypeScript",
-                "Supabase",
-                "Tailwind CSS",
-                "Mobile Development",
-              ]}
+              tech={["Expo", "TypeScript", "Supabase", "Tailwind CSS"]}
               link="https://versa-style.vercel.app/"
               github="https://github.com/strat-development/fashion-app"
             />
@@ -304,14 +335,14 @@ export default function Home() {
             <ProjectCard
               title="HEDUM - Pediatric Therapy Website"
               description="Website created for pediatric therapy center in Zielona Góra. It includes information about the center, services, and contact information."
-              tech={["React", "Node.js", "Next.js", "Tailwind CSS", "Website Development"]}
+              tech={["React", "Node.js", "Next.js", "Tailwind CSS"]}
               link="https://www.hedum.pl/"
             />
 
             <ProjectCard
               title="Temperature Monitoring App"
               description="Device based on ESP32 measures temperature and other parameters and displays them on the website."
-              tech={["Next.js", "TypeScript", "Tailwind CSS", "MongoDB", "ArduinoIDE", "C++", "Website Development"]}
+              tech={["Next.js", "TypeScript", "MongoDB", "C++", "ArduinoIDE"]}
               link="https://esp32-frontend.vercel.app/"
               github="https://github.com/Fernando546/esp32-frontend"
             />
@@ -319,25 +350,27 @@ export default function Home() {
             <ProjectCard
               title="Message App based on LoRa technology"
               description="Real-time messaging app utilizing LoRa technology for low-power, long-range communication."
-              tech={["Kotlin", "Android Studio", "ESP32", "LoRa", "Mobile Development"]}
+              tech={["Kotlin", "Android Studio", "ESP32", "LoRa"]}
               github="https://github.com/Fernando546/LoraApp"
             />
           </div>
         </div>
       </section>
 
-      {/* Experience Section */}
-      <section id="experience" className="py-20 px-6 bg-stone-700/30">
-        <div className="max-w-6xl mx-auto">
-          <SectionTitle title="Experience" subtitle="My journey" />
+      <SectionDivider variant="dots" />
+
+      {/* ===== EXPERIENCE horizontal lines ===== */}
+      <section id="experience" className="py-24 px-6 relative">
+        <div className="absolute inset-0 bg-hlines" />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <SectionTitle title="Experience" subtitle="my journey so far" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* Work Experience */}
             <div>
-              <h3 className="text-2xl font-semibold text-white mb-8">
-                Work Experience
+              <h3 className="text-sm font-mono font-medium text-zinc-500 mb-6 uppercase tracking-wider">
+                Work
               </h3>
-              <div className="space-y-6">
+              <div className="space-y-3">
                 <ExperienceCard
                   title="Intern"
                   company="ORLEN IT Group"
@@ -345,7 +378,6 @@ export default function Home() {
                   description="I learned how companies operate from the inside and gained practical experience in network administration."
                   type="work"
                 />
-
                 <ExperienceCard
                   title="Apprentice"
                   company="Perceptus"
@@ -356,12 +388,11 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Education */}
             <div>
-              <h3 className="text-2xl font-semibold text-white mb-8">
+              <h3 className="text-sm font-mono font-medium text-zinc-500 mb-6 uppercase tracking-wider">
                 Education
               </h3>
-              <div className="space-y-6">
+              <div className="space-y-3">
                 <ExperienceCard
                   title="4th Year Student"
                   company="University of Zielona Góra"
@@ -369,7 +400,6 @@ export default function Home() {
                   description="Majoring in Computer Science with focus on web development and embedded systems."
                   type="education"
                 />
-
                 <ExperienceCard
                   title="Middle School"
                   company="ZSEIS Elektronik Zielona Góra"
@@ -383,63 +413,87 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Hobbies Section */}
-      <section id="hobbies" className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <SectionTitle title="Hobbies & Interests" subtitle="Beyond coding" />
+      <SectionDivider variant="line" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* ===== HOBBIES cross-hatch ===== */}
+      <section id="hobbies" className="py-24 px-6 relative">
+        <div className="absolute inset-0 bg-cross" />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <SectionTitle title="Hobbies" subtitle="beyond the code" />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
             <HobbyCard
               title="Sports"
-              description="Passionate about fitness - gym training and running every day to maintain a healthy lifestyle and mental clarity."
-              icon={<IconBallBasketball size={28} />}
+              description="Passionate about fitness - gym training and running every day to maintain a healthy lifestyle."
+              icon={<IconBallBasketball size={22} />}
             />
-
             <HobbyCard
               title="IoT & Hardware"
-              description="Interested in Internet of Things projects, smart devices, and embedded systems development."
-              icon={<IconWifi size={28} />}
+              description="Interested in Internet of Things projects, smart devices, and embedded systems."
+              icon={<IconWifi size={22} />}
             />
-
             <HobbyCard
               title="Web Development"
-              description="Building modern, responsive web applications and exploring new frameworks and technologies."
-              icon={<IconCode size={28} />}
+              description="Building modern, responsive web applications and exploring new frameworks."
+              icon={<IconCode size={22} />}
             />
-
             <HobbyCard
               title="Artificial Intelligence"
-              description="Fascinated by AI and machine learning possibilities. Exploring new AI technologies, their potential applications, and how they can revolutionize various industries."
-              icon={<IconBrain size={28} />}
+              description="Fascinated by AI and machine learning. Exploring how they can revolutionize industries."
+              icon={<IconBrain size={22} />}
             />
-
             <HobbyCard
               title="Music"
               description="Enjoys listening to various genres and exploring music production tools."
-              icon={<IconMusic size={28} />}
+              icon={<IconMusic size={22} />}
             />
-
             <HobbyCard
               title="FPV Drones"
-              description="Flying FPV drones, especially DJI Avata 2. Passionate about drone racing and capturing aerial footage with first-person view technology."
-              icon={<IconDrone size={28} />}
+              description="Flying FPV drones, especially DJI Avata 2. Passionate about drone racing and aerial footage."
+              icon={<IconDrone size={22} />}
             />
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="relative py-20 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-stone-800/50 to-stone-900/50"></div>
+      <SectionDivider variant="code" />
+
+      {/* ===== CONTACT — grid background ===== */}
+      <section id="contact" className="relative py-24 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-grid" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-emerald-500/[0.02] rounded-full blur-[80px]" />
         <div className="relative z-10 max-w-6xl mx-auto text-center">
-          <SectionTitle title="Let's Connect" />
+          <SectionTitle title="Contact" subtitle="let's talk" />
 
-          <p className="text-lg text-stone-300 mb-12 leading-relaxed">
-            I'm always interested in hearing about new opportunities and collaborations.
-          </p>
+          <div className="terminal-card max-w-lg mx-auto mb-12">
+            <div className="terminal-header">
+              <div className="terminal-dot red" />
+              <div className="terminal-dot yellow" />
+              <div className="terminal-dot green" />
+              <span className="ml-3 text-xs font-mono text-zinc-600">~/contact</span>
+            </div>
+            <div className="p-5 font-mono text-sm text-left space-y-2">
+              <p className="text-zinc-600">
+                <span className="text-zinc-400">dev</span>
+                <span className="text-zinc-700">@</span>
+                <span className="text-zinc-400">portfolio</span>
+                <span className="text-zinc-600"> ~ % </span>
+                <span className="text-zinc-300">cat message.txt</span>
+              </p>
+              <p className="text-zinc-300 pl-2">
+                I&apos;m always interested in hearing about new opportunities and collaborations.
+              </p>
+              <p className="text-zinc-600 mt-3">
+                <span className="text-zinc-400">dev</span>
+                <span className="text-zinc-700">@</span>
+                <span className="text-zinc-400">portfolio</span>
+                <span className="text-zinc-600"> ~ % </span>
+                <span className="animate-blink text-emerald-400">▊</span>
+              </p>
+            </div>
+          </div>
 
-          <div className="flex justify-center mt-12">
-            {/* Desktop - FloatingDock */}
+          <div className="flex justify-center">
             <div className="hidden md:flex">
               <FloatingDock
                 items={[
@@ -459,33 +513,20 @@ export default function Home() {
                     href: "https://www.linkedin.com/in/dawid-feru%C5%9B-210924197/",
                   },
                 ]}
-                desktopClassName="bg-stone-800 border border-stone-700 h-20 px-6 pb-4 gap-6 [&>a]:scale-125"
-                mobileClassName="bg-stone-800 border border-stone-700"
+                desktopClassName="bg-zinc-900/90 border border-zinc-800 h-20 px-6 pb-4 gap-6 [&>a]:scale-125"
+                mobileClassName="bg-zinc-900/90 border border-zinc-800"
               />
             </div>
 
-            {/* Mobile - Static Icons */}
             <div className="md:hidden flex gap-8">
-              <a
-                href="mailto:dawid.ferus546@gmail.com"
-                className="text-stone-300 hover:text-white transition-colors"
-                title="Email"
-              >
-                <IconMail size={32} />
+              <a href="mailto:dawid.ferus546@gmail.com" className="text-zinc-400 hover:text-white transition-colors" title="Email">
+                <IconMail size={26} />
               </a>
-              <a
-                href="https://github.com/Fernando546"
-                className="text-stone-300 hover:text-white transition-colors"
-                title="GitHub"
-              >
-                <IconBrandGithub size={32} />
+              <a href="https://github.com/Fernando546" className="text-zinc-400 hover:text-white transition-colors" title="GitHub">
+                <IconBrandGithub size={26} />
               </a>
-              <a
-                href="https://www.linkedin.com/in/dawid-feru%C5%9B-210924197/"
-                className="text-stone-300 hover:text-white transition-colors"
-                title="LinkedIn"
-              >
-                <IconBrandLinkedin size={32} />
+              <a href="https://www.linkedin.com/in/dawid-feru%C5%9B-210924197/" className="text-zinc-400 hover:text-white transition-colors" title="LinkedIn">
+                <IconBrandLinkedin size={26} />
               </a>
             </div>
           </div>
@@ -493,9 +534,11 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-stone-700 py-8 px-6 bg-stone-800/50">
-        <div className="max-w-6xl mx-auto text-center text-stone-400 text-sm">
-          <p>© 2025 Personal Portfolio. All rights reserved.</p>
+      <footer className="border-t border-zinc-900 py-6 px-6">
+        <div className="max-w-6xl mx-auto text-center">
+          <p className="text-zinc-700 text-xs font-mono">
+            © 2026 My Portfolio
+          </p>
         </div>
       </footer>
     </div>
