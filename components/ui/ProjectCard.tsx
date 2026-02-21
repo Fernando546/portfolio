@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
+import { useMotionValue, useSpring, useTransform } from "motion/react";
 
 interface ProjectCardProps {
   title: string;
@@ -19,6 +19,7 @@ export default function ProjectCard({
   github,
 }: ProjectCardProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -37,6 +38,22 @@ export default function ProjectCard({
     ["-10deg", "10deg"]
   );
 
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
@@ -50,20 +67,19 @@ export default function ProjectCard({
   };
 
   return (
-    <motion.div
+    <div
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
       style={{
-        rotateY,
-        rotateX,
+        // @ts-expect-error motion values work as CSS values
+        "--rx": rotateX,
+        "--ry": rotateY,
+        transform: `perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))`,
         transformStyle: "preserve-3d",
       }}
-      className="terminal-card group"
+      className={`terminal-card group glitch-hover transition-all duration-500 ease-out ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+        }`}
     >
       {/* Terminal Header */}
       <div className="terminal-header">
@@ -83,7 +99,7 @@ export default function ProjectCard({
         }}
         className="relative z-10 p-6"
       >
-        <h3 className="text-lg font-bold text-white mb-2 font-mono">
+        <h3 className="text-lg font-bold text-white mb-2 font-mono glitch-text" data-text={title}>
           {title}
         </h3>
         <p className="text-zinc-400 mb-4 text-sm leading-relaxed">
@@ -126,6 +142,6 @@ export default function ProjectCard({
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

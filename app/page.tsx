@@ -1,6 +1,7 @@
 "use client";
 
 import SectionTitle from "@/components/ui/SectionTitle";
+import GlitchText from "@/components/ui/GlitchText";
 import SkillCard from "@/components/ui/SkillCard";
 import ProjectCard from "@/components/ui/ProjectCard";
 import ExperienceCard from "@/components/ui/ExperienceCard";
@@ -214,7 +215,7 @@ export default function Home() {
               >
                 <h1 className="text-4xl md:text-6xl font-bold leading-tight text-white font-mono tracking-tight">
                   Hey, I&apos;m{" "}
-                  <span className="text-emerald-400">Dawid</span>
+                  <GlitchText text="Dawid" className="text-emerald-400 inline" />
                 </h1>
               </motion.div>
 
@@ -223,7 +224,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.15 }}
-                className="mb-8 terminal-card p-4 w-full max-w-md"
+                className="mb-8 terminal-card p-4 w-full max-w-md scanline-flash flash-active"
               >
                 <div className="terminal-header !p-2 !-mx-4 !-mt-4 !mb-3 !px-3">
                   <div className="terminal-dot red" style={{ width: 8, height: 8 }} />

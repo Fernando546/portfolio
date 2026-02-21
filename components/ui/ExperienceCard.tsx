@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useRef, useEffect, useState } from "react";
 
 interface ExperienceCardProps {
   company?: string;
@@ -16,13 +16,30 @@ export default function ExperienceCard({
   period,
   description,
 }: ExperienceCardProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
-      className="terminal-card group p-5 border-l-2 border-zinc-800 hover:border-emerald-500/30 transition-all duration-300"
+    <div
+      ref={ref}
+      className={`terminal-card group p-5 border-l-2 border-zinc-800 hover:border-emerald-500/30 transition-all duration-500 ease-out ${visible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
+        }`}
     >
       <div className="flex justify-between items-start mb-2">
         <div>
@@ -43,6 +60,6 @@ export default function ExperienceCard({
           {description}
         </p>
       )}
-    </motion.div>
+    </div>
   );
 }
