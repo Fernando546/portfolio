@@ -10,7 +10,7 @@ import { StarsBackground } from "@/components/ui/stars-background";
 import { ShootingStars } from "@/components/ui/shooting-stars";
 import { FloatingDock } from "@/components/ui/floating-dock";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
-import { IconMail, IconBrandGithub, IconBrandLinkedin, IconBallBasketball, IconWifi, IconCode, IconBrain, IconMusic, IconDrone, IconTerminal2, IconChevronDown } from "@tabler/icons-react";
+import { IconMail, IconBrandGithub, IconBrandLinkedin, IconBallBasketball, IconWifi, IconCode, IconBrain, IconMusic, IconDrone, IconTerminal2, IconChevronDown, IconFileDownload } from "@tabler/icons-react";
 import { useState, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -83,20 +83,21 @@ function SectionDivider({ variant = "fade" }: { variant?: "fade" | "line" | "dot
 const MemoStars = memo(StarsBackground);
 const MemoShootingStars = memo(ShootingStars);
 
-// Skills data
 const allSkills = [
-  { name: "TypeScript", proficiency: "intermediate" as const },
-  { name: "React", proficiency: "intermediate" as const },
-  { name: "Next.js", proficiency: "intermediate" as const },
-  { name: "React Native", proficiency: "intermediate" as const },
-  { name: "Expo", proficiency: "intermediate" as const },
-  { name: "Mobile Development", proficiency: "intermediate" as const },
-  { name: "Node.js", proficiency: "intermediate" as const },
-  { name: "C++", proficiency: "beginner" as const },
-  { name: "MongoDB", proficiency: "intermediate" as const },
-  { name: "Tailwind CSS", proficiency: "intermediate" as const },
-  { name: "Git & GitHub", proficiency: "intermediate" as const },
-  { name: "REST APIs", proficiency: "beginner" as const },
+  "TypeScript",
+  "React",
+  "Next.js",
+  "React Native",
+  "Expo",
+  "Node.js",
+  "C++",
+  "MongoDB",
+  "Supabase",
+  "Tailwind CSS",
+  "Git & GitHub",
+  "REST APIs",
+  "Docker",
+  "Linux",
 ];
 
 const MOBILE_SKILLS_VISIBLE = 6;
@@ -277,6 +278,17 @@ export default function Home() {
                     Get In Touch
                   </a>
                 </HoverBorderGradient>
+                <HoverBorderGradient
+                  containerClassName="rounded-lg"
+                  className="px-5 py-2 text-zinc-400 font-mono font-medium text-sm"
+                  duration={1}
+                  clockwise={true}
+                >
+                  <a href="/cv" target="_blank" className="flex items-center justify-center w-full h-full gap-2">
+                    <IconFileDownload size={16} />
+                    Download CV
+                  </a>
+                </HoverBorderGradient>
               </motion.div>
             </div>
           </div>
@@ -303,16 +315,16 @@ export default function Home() {
           <SectionTitle title="Skills" subtitle="what I work with" />
 
           {/* Desktop: all skills visible / Mobile: collapsible */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {allSkills.map((skill, index) => (
               <div
-                key={skill.name}
+                key={skill}
                 className={`${!showAllSkills && index >= MOBILE_SKILLS_VISIBLE
                   ? "hidden md:block"
                   : ""
                   }`}
               >
-                <SkillCard name={skill.name} proficiency={skill.proficiency} />
+                <SkillCard name={skill} />
               </div>
             ))}
           </div>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV — Full-Stack Developer</title>
+    <meta name="description" content="CV programisty Full-Stack — doświadczenie, umiejętności, projekty" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+
+    <!-- Export buttons — hidden in print / PDF -->
+    <div class="export-bar">
+        <button id="export-light" class="export-btn export-btn--light" title="Eksportuj jasny PDF">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+            PDF Jasny
+        </button>
+        <button id="export-dark" class="export-btn export-btn--dark" title="Eksportuj ciemny PDF">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+            PDF Ciemny
+        </button>
+    </div>
+
+    <div id="cv" class="cv-container">
+
+        <!-- ===== HEADER ===== -->
+        <header class="cv-header">
+            <div class="header-main">
+                <h1>Dawid Feruś</h1>
+                <p class="headline">Full-Stack Developer</p>
+            </div>
+            <div class="header-contact">
+                <div class="contact-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="4" width="20" height="16" rx="2" />
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                    </svg>
+                    <span>dawid.ferus546@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                    </svg>
+                    <span>+48 667 857 666</span>
+                </div>
+                <div class="contact-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                        <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    <span>Zielona Góra, Polska</span>
+                </div>
+                <div class="contact-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                        <path d="M9 18c-4.51 2-5-2-7-2" />
+                    </svg>
+                    <span>github.com/Fernando546</span>
+                </div>
+                <div class="contact-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                        <rect width="4" height="12" x="2" y="9" />
+                        <circle cx="4" cy="4" r="2" />
+                    </svg>
+                    <span>linkedin.com/in/dawid-feru%C5%9B-210924197/</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="cv-body">
+
+            <div class="cv-column cv-column--left">
+
+                <!-- PODSUMOWANIE -->
+                <section class="cv-section">
+                    <h2 class="section-title">Podsumowanie</h2>
+                    <p class="summary-text">
+                        Jestem studentem studiów magisterskich na kierunku Informatyka.
+                        Moje doświadczenie obejmuje budowanie responsywnych stron internetowych oraz projektowanie
+                        aplikacji
+                        mobilnych.
+                        Poza warstwą software'ową, zgłębiam systemy wbudowane i projektuję własne rozwiązania.
+                        W wolnej chwili lubię eksperymentować z nowymi technologiami i tworzyć własne projekty.
+                    </p>
+                </section>
+
+                <!-- DOŚWIADCZENIE -->
+                <section class="cv-section">
+                    <h2 class="section-title">Doświadczenie</h2>
+
+                    <div class="experience-item">
+                        <div class="exp-header">
+                            <div>
+                                <h3 class="exp-title">Praktyka zawodowa</h3>
+                                <p class="exp-company">Perceptus Sp. z o.o. — Zielona Góra</p>
+                            </div>
+                            <span class="exp-date">2021</span>
+                        </div>
+                        <ul class="exp-list">
+                            <li>Zdobywanie wiedzy z zakresu podstaw cyberbezpieczeństwa i ochrony danych</li>
+                            <li>Administracja usługami katalogowymi Active Directory</li>
+                            <li>Rozwijanie umiejętności miękkich poprzez przygotowywanie i prowadzenie prezentacji
+                                technicznych</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="exp-header">
+                            <div>
+                                <h3 class="exp-title">Praktyka zawodowa</h3>
+                                <p class="exp-company">Orlen SA. Dział Informatyki — Zielona Góra</p>
+                            </div>
+                            <span class="exp-date">2025</span>
+                        </div>
+                        <ul class="exp-list">
+                            <li>Konfiguracja sprzętowa serwerów oraz modernizacja i migracja komponentów bazowych</li>
+                            <li>Zarządzanie uprawnieniami użytkowników w strukturach systemowych</li>
+                            <li>Automatyzacja procesów za pomocą skryptów zarządzających</li>
+                            <li>Świadczenie bieżącego wsparcia technicznego i rozwiązywanie problemów incydentalnych
+                                (Helpdesk)</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- PROJEKTY -->
+                <section class="cv-section">
+                    <h2 class="section-title">Projekty</h2>
+
+                    <div class="project-item">
+                        <div class="project-header">
+                            <h3 class="project-name">Versa - AI Fashion App</h3>
+                            <span class="project-tech">Expo, TypeScript, Supabase, </span>
+                        </div>
+                        <p class="project-desc">Aplikacja rekomendująca stylizacje, oparta na sztucznej inteligencji,
+                            która sugeruje stylizacje w oparciu o preferencje użytkownika.</p>
+                    </div>
+
+                    <div class="project-item">
+                        <div class="project-header">
+                            <h3 class="project-name">HEDUM - Pediatric Therapy</h3>
+                            <span class="project-tech">Next.js, TypeScript, Tailwind CSS, Node.js</span>
+                        </div>
+                        <p class="project-desc">Strona internetowa stworzona dla ośrodka terapii pediatrycznej w
+                            Zielonej Górze.
+                        </p>
+                    </div>
+
+                    <div class="project-item">
+                        <div class="project-header">
+                            <h3 class="project-name">Message App based on LoRa</h3>
+                            <span class="project-tech">Kotlin, Android Studio, ESP32, LoRa, C++</span>
+                        </div>
+                        <p class="project-desc">Aplikacja do przesyłania wiadomości w czasie rzeczywistym
+                            wykorzystująca technologię LoRa do komunikacji o niskim poborze mocy i dużym zasięgu.
+                        </p>
+                    </div>
+                </section>
+
+            </div>
+
+            <div class="cv-column cv-column--right">
+
+                <!-- UMIEJĘTNOŚCI -->
+                <section class="cv-section">
+                    <h2 class="section-title">Umiejętności</h2>
+
+                    <div class="skill-group">
+                        <h4 class="skill-group-title">Frontend</h4>
+                        <div class="skill-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">Next.js</span>
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3 / SCSS</span>
+                            <span class="tag">Tailwind CSS</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <h4 class="skill-group-title">Backend</h4>
+                        <div class="skill-tags">
+                            <span class="tag">Node.js</span>
+                            <span class="tag">REST API</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <h4 class="skill-group-title">Bazy danych</h4>
+                        <div class="skill-tags">
+                            <span class="tag">Supabase</span>
+                            <span class="tag">MongoDB</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <h4 class="skill-group-title">DevOps & Narzędzia</h4>
+                        <div class="skill-tags">
+                            <span class="tag">Git</span>
+                            <span class="tag">Docker</span>
+                            <span class="tag">Linux</span>
+                            <span class="tag">ArduinoIDE</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <h4 class="skill-group-title">Inne</h4>
+                        <div class="skill-tags">
+                            <span class="tag">C++</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- EDUKACJA -->
+                <section class="cv-section">
+                    <h2 class="section-title">Edukacja</h2>
+
+                    <div class="education-item">
+                        <h3 class="edu-title">Informatyka - mgr inż.</h3>
+                        <p class="edu-school">Uniwersytet Zielonogórski</p>
+                        <span class="edu-date">2026 - teraz</span>
+                    </div>
+
+                    <div class="education-item">
+                        <h3 class="edu-title">Informatyka - inż.</h3>
+                        <p class="edu-school">Uniwersytet Zielonogórski</p>
+                        <span class="edu-date">2022-2026</span>
+                    </div>
+                </section>
+
+                <!-- CERTYFIKATY -->
+                <section class="cv-section">
+                    <h2 class="section-title">Certyfikaty</h2>
+
+                    <div class="cert-item">
+                        <h3 class="cert-name">Kwalifikacja EE.08</h3>
+                        <span class="cert-date">2020</span>
+                    </div>
+                    <div class="cert-item">
+                        <h3 class="cert-name">Kwalifikacja EE.09</h3>
+                        <span class="cert-date">2021</span>
+                    </div>
+                </section>
+
+                <!-- JĘZYKI -->
+                <section class="cv-section">
+                    <h2 class="section-title">Języki</h2>
+                    <div class="lang-list">
+                        <div class="lang-item">
+                            <span class="lang-name">Polski</span>
+                            <span class="lang-level">Ojczysty</span>
+                        </div>
+                        <div class="lang-item">
+                            <span class="lang-name">Angielski</span>
+                            <span class="lang-level">B2</span>
+                        </div>
+                        <div class="lang-item">
+                            <span class="lang-name">Hiszpański</span>
+                            <span class="lang-level">A1</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ZAINTERESOWANIA -->
+                <section class="cv-section">
+                    <h2 class="section-title">Zainteresowania</h2>
+                    <p class="interests-text">
+                        Open Source • Siłownia • Home Automation • AI • Podróże
+                    </p>
+                </section>
+
+            </div>
+
+        </main>
+
+        <!-- ===== FOOTER — RODO ===== -->
+        <footer class="cv-footer">
+            <p>Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu
+                rekrutacji
+                zgodnie z art. 6 ust. 1 lit. a Rozporządzenia Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27
+                kwietnia
+                2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych osobowych (RODO).
+                Jednocześnie wyrażam zgodę na przetwarzanie moich danych osobowych również na potrzeby przyszłych
+                procesów
+                rekrutacyjnych.</p>
+        </footer>
+
+    </div>
+
+    <script type="module" src="/main.js"></script>
+</body>
+
+</html>
