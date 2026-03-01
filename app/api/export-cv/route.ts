@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import puppeteer from "puppeteer";
+import puppeteerCore from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 import { PDFDocument, rgb } from "pdf-lib";
 
 // Convert hex color to pdf-lib rgb
@@ -8,6 +9,57 @@ function hexToRgb(hex: string) {
     const g = parseInt(hex.slice(3, 5), 16) / 255;
     const b = parseInt(hex.slice(5, 7), 16) / 255;
     return rgb(r, g, b);
+}
+
+// Vercel serverless function config
+export const maxDuration = 30;
+
+async function getBrowser() {
+    if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+        const executablePath = await chromium.executablePath();
+        return puppeteerCore.launch({
+            args: chromium.args,
+            executablePath,
+            headless: true,
+        });
+    } else {
+        const possiblePaths = [
+            "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+            "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+            process.env.CHROME_PATH || "",
+        ].filter(Boolean);
+
+        try {
+            const puppeteer = await import("puppeteer");
+            return puppeteer.default.launch({
+                headless: true,
+                args: [
+                    "--no-sandbox",
+                    "--disable-setuid-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--font-render-hinting=none",
+                ],
+            });
+        } catch {
+            for (const chromePath of possiblePaths) {
+                try {
+                    return await puppeteerCore.launch({
+                        headless: true,
+                        executablePath: chromePath,
+                        args: [
+                            "--no-sandbox",
+                            "--disable-setuid-sandbox",
+                            "--disable-dev-shm-usage",
+                            "--font-render-hinting=none",
+                        ],
+                    });
+                } catch {
+                    continue;
+                }
+            }
+            throw new Error("No Chrome installation found. Install puppeteer or set CHROME_PATH.");
+        }
+    }
 }
 
 export async function GET(request: NextRequest) {
@@ -21,15 +73,7 @@ export async function GET(request: NextRequest) {
 
     let browser;
     try {
-        browser = await puppeteer.launch({
-            headless: true,
-            args: [
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
-                "--disable-dev-shm-usage",
-                "--font-render-hinting=none",
-            ],
-        });
+        browser = await getBrowser();
 
         const page = await browser.newPage();
         await page.setViewport({ width: 900, height: 1200 });
@@ -111,7 +155,7 @@ export async function GET(request: NextRequest) {
         // Get the grid column ratio from the rendered page
         const columnRatio = await page.evaluate(() => {
             const body = document.querySelector(".cv-body") as HTMLElement;
-            if (!body) return 0.615; // fallback: 1.6 / (1.6 + 1) ≈ 0.615
+            if (!body) return 0.615;
             const cols = body.querySelectorAll(".cv-column");
             if (cols.length < 2) return 0.615;
             const leftWidth = (cols[0] as HTMLElement).getBoundingClientRect().width;
@@ -121,7 +165,7 @@ export async function GET(request: NextRequest) {
 
         await new Promise((resolve) => setTimeout(resolve, 500));
 
-        // Generate PDF with @page margins (white margins on page 2+)
+        // Generate PDF
         const pdfBuffer = await page.pdf({
             format: "A4",
             printBackground: true,
@@ -130,6 +174,7 @@ export async function GET(request: NextRequest) {
         });
 
         await browser.close();
+        browser = undefined;
 
         // Post-process PDF: paint colored rectangles over the white @page margins
         const pdfDoc = await PDFDocument.load(pdfBuffer);
@@ -147,7 +192,6 @@ export async function GET(request: NextRequest) {
             const leftWidth = width * columnRatio;
             const rightWidth = width - leftWidth;
 
-            // Draw left column color in top margin
             pg.drawRectangle({
                 x: 0,
                 y: height - marginPt,
@@ -156,7 +200,6 @@ export async function GET(request: NextRequest) {
                 color: leftColor,
             });
 
-            // Draw right column color in top margin
             pg.drawRectangle({
                 x: leftWidth,
                 y: height - marginPt,
