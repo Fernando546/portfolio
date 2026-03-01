@@ -1,75 +1,34 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState } from "react";
 
 export default function CVPage() {
-    useEffect(() => {
-        const script = document.createElement("script");
-        script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
-        script.async = true;
-        document.head.appendChild(script);
+    const [exporting, setExporting] = useState<"light" | "dark" | null>(null);
 
-        script.onload = () => {
-            const exportLight = document.getElementById("export-light");
-            const exportDark = document.getElementById("export-dark");
+    const exportPDF = async (mode: "light" | "dark") => {
+        if (exporting) return;
+        setExporting(mode);
 
-            const exportPDF = (mode: "light" | "dark") => {
-                const el = document.getElementById("cv");
-                if (!el) return;
-                document.body.classList.add("exporting");
-                if (mode === "light") document.body.classList.add("printing");
+        try {
+            const response = await fetch(`/api/export-cv?mode=${mode}`);
+            if (!response.ok) throw new Error("Export failed");
 
-                setTimeout(() => {
-                    // @ts-expect-error html2pdf is loaded dynamically
-                    html2pdf()
-                        .set({
-                            margin: 0,
-                            filename: `CV_Dawid_Ferus_${mode}.pdf`,
-                            image: { type: "jpeg", quality: 0.98 },
-                            html2canvas: {
-                                scale: 2,
-                                useCORS: true,
-                                logging: false,
-                                onclone: (clonedDoc: Document) => {
-                                    clonedDoc.querySelectorAll('link[rel="stylesheet"]').forEach((link) => {
-                                        const href = link.getAttribute("href") || "";
-                                        if (href.startsWith("http") && !href.includes(window.location.hostname)) {
-                                            link.remove();
-                                        }
-                                    });
-                                    clonedDoc.querySelectorAll("style").forEach((style) => {
-                                        if (style.textContent) {
-                                            style.textContent = style.textContent.replace(/@import\s+url\([^)]+\);?/g, "");
-                                        }
-                                    });
-                                    const cvEl = clonedDoc.getElementById("cv");
-                                    if (cvEl) {
-                                        cvEl.style.margin = "0";
-                                        cvEl.style.borderRadius = "0";
-                                        cvEl.style.border = "none";
-                                        cvEl.style.boxShadow = "none";
-                                    }
-                                },
-                            },
-                            pagebreak: { mode: ["avoid-all", "css", "legacy"], avoid: [".cv-section", ".experience-item", ".project-item", ".skill-group", ".education-item", ".cert-item", ".cv-header", ".cv-footer"] },
-                            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-                        })
-                        .from(el)
-                        .save()
-                        .then(() => {
-                            document.body.classList.remove("exporting", "printing");
-                        });
-                }, 300);
-            };
-
-            exportLight?.addEventListener("click", () => exportPDF("light"));
-            exportDark?.addEventListener("click", () => exportPDF("dark"));
-        };
-
-        return () => {
-            script.remove();
-        };
-    }, []);
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `CV_Dawid_Ferus_${mode}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error("PDF export error:", error);
+            alert("Wystąpił błąd podczas eksportu PDF. Spróbuj ponownie.");
+        } finally {
+            setExporting(null);
+        }
+    };
 
     return (
         <>
@@ -77,25 +36,43 @@ export default function CVPage() {
 
             {/* Export buttons */}
             <div className="export-bar">
-                <button id="export-light" className="export-btn export-btn--light" title="Export Light PDF">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="12" cy="12" r="5" />
-                        <line x1="12" y1="1" x2="12" y2="3" />
-                        <line x1="12" y1="21" x2="12" y2="23" />
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                        <line x1="1" y1="12" x2="3" y2="12" />
-                        <line x1="21" y1="12" x2="23" y2="12" />
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                    </svg>
-                    PDF Light
+                <button
+                    onClick={() => exportPDF("light")}
+                    className={`export-btn export-btn--light ${exporting === "light" ? "export-btn--loading" : ""}`}
+                    title="Export Light PDF"
+                    disabled={exporting !== null}
+                >
+                    {exporting === "light" ? (
+                        <span className="spinner" />
+                    ) : (
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="12" r="5" />
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                    )}
+                    {exporting === "light" ? "Generowanie..." : "PDF Light"}
                 </button>
-                <button id="export-dark" className="export-btn export-btn--dark" title="Export Dark PDF">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                    </svg>
-                    PDF Dark
+                <button
+                    onClick={() => exportPDF("dark")}
+                    className={`export-btn export-btn--dark ${exporting === "dark" ? "export-btn--loading" : ""}`}
+                    title="Export Dark PDF"
+                    disabled={exporting !== null}
+                >
+                    {exporting === "dark" ? (
+                        <span className="spinner" />
+                    ) : (
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                    )}
+                    {exporting === "dark" ? "Generowanie..." : "PDF Dark"}
                 </button>
             </div>
 
@@ -619,5 +596,24 @@ const cvStyles = `
     --cv-accent-bright: #4338ca;
     --cv-border: #e5e7eb;
     --cv-border-accent: rgba(79, 70, 229, 0.2);
+  }
+
+  body.printing .cv-header {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(96, 165, 250, 0.04));
+  }
+
+  .export-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
+
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
 `;
