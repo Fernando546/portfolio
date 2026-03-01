@@ -104,7 +104,7 @@ export default function CVPage() {
                 <header className="cv-header">
                     <div className="header-main">
                         <h1>Dawid Feruś</h1>
-                        <p className="headline">Full-Stack Developer</p>
+                        <p className="headline">IT Student</p>
                     </div>
                     <div className="header-contact">
                         <div className="contact-item">
@@ -189,7 +189,7 @@ export default function CVPage() {
                                 <ul className="exp-list">
                                     <li>Konfiguracja sprzętowa serwerów oraz modernizacja i migracja komponentów bazowych</li>
                                     <li>Zarządzanie uprawnieniami użytkowników w strukturach systemowych</li>
-                                    <li>Automatyzacja procesów za pomocą skryptów zarządzających</li>
+                                    <li>Automatyzacja procesów za pomocą skryptów zarządzających (Bash)</li>
                                     <li>Świadczenie bieżącego wsparcia technicznego i rozwiązywanie problemów incydentalnych (Helpdesk)</li>
                                 </ul>
                             </div>
@@ -238,8 +238,17 @@ export default function CVPage() {
                                     <span className="tag">TypeScript</span>
                                     <span className="tag">JavaScript</span>
                                     <span className="tag">HTML5</span>
-                                    <span className="tag">CSS3 / SCSS</span>
+                                    <span className="tag">CSS3</span>
                                     <span className="tag">Tailwind CSS</span>
+                                </div>
+                            </div>
+
+                            <div className="skill-group">
+                                <h4 className="skill-group-title">Mobile</h4>
+                                <div className="skill-tags">
+                                    <span className="tag">React Native</span>
+                                    <span className="tag">Expo</span>
+                                    <span className="tag">NativeWind</span>
                                 </div>
                             </div>
 
@@ -265,6 +274,7 @@ export default function CVPage() {
                                     <span className="tag">Git</span>
                                     <span className="tag">Docker</span>
                                     <span className="tag">Linux</span>
+                                    <span className="tag">Bash</span>
                                     <span className="tag">ArduinoIDE</span>
                                 </div>
                             </div>
@@ -318,10 +328,6 @@ export default function CVPage() {
                                 <div className="lang-item">
                                     <span className="lang-name">Angielski</span>
                                     <span className="lang-level">B2</span>
-                                </div>
-                                <div className="lang-item">
-                                    <span className="lang-name">Hiszpański</span>
-                                    <span className="lang-level">A1</span>
                                 </div>
                             </div>
                         </section>
